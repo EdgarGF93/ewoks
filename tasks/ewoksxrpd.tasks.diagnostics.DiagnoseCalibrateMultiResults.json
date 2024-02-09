@@ -1,0 +1,32 @@
+{
+  "task_type": "class",
+  "task_identifier": "ewoksxrpd.tasks.diagnostics.DiagnoseCalibrateMultiResults",
+  "required_input_names": [
+    "calibrant",
+    "parameters",
+    "images",
+    "detector",
+    "positions",
+    "parametrization"
+  ],
+  "optional_input_names": [
+    "figsize",
+    "retry_timeout",
+    "filename",
+    "show",
+    "detector_config",
+    "rings",
+    "dpi",
+    "fontsize",
+    "pause",
+    "retry_period",
+    "scaling"
+  ],
+  "output_names": [
+    "saved"
+  ],
+  "category": "ewoksxrpd",
+  "description": "Quality of a multi-distance pyFAI calibration",
+  "icon": "default.png",
+  "label": "DiagnoseCalibrateMultiResults"
+}

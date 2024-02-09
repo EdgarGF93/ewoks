@@ -1,0 +1,131 @@
+{
+  "graph": {
+    "id": "wait"
+  },
+  "nodes": [
+    {
+      "id": "node1",
+      "task_type": "class",
+      "task_identifier": "tasks_parallel.Launcher",
+      "default_inputs": [
+        {
+          "name": "_run",
+          "value": true
+        }
+      ],
+      "uiProps": {
+        "position": {
+          "x": 12,
+          "y": 72
+        }
+      }
+    },
+    {
+      "id": "node2",
+      "task_type": "class",
+      "task_identifier": "tasks_parallel.Wait1s",
+      "uiProps": {
+        "position": {
+          "x": 262,
+          "y": 612
+        }
+      }
+    },
+    {
+      "id": "node3",
+      "task_type": "class",
+      "task_identifier": "tasks_parallel.Wait1s",
+      "uiProps": {
+        "position": {
+          "x": 262,
+          "y": 812
+        }
+      }
+    },
+    {
+      "id": "node4",
+      "task_type": "class",
+      "task_identifier": "tasks_parallel.Wait1s",
+      "uiProps": {
+        "position": {
+          "x": 262,
+          "y": 12
+        }
+      }
+    },
+    {
+      "id": "node5",
+      "task_type": "class",
+      "task_identifier": "tasks_parallel.Wait1s",
+      "uiProps": {
+        "position": {
+          "x": 262,
+          "y": 212
+        }
+      }
+    },
+    {
+      "id": "node6",
+      "task_type": "class",
+      "task_identifier": "tasks_parallel.Wait1s",
+      "uiProps": {
+        "position": {
+          "x": 262,
+          "y": 412
+        }
+      }
+    }
+  ],
+  "links": [
+    {
+      "source": "node1",
+      "target": "node2",
+      "data_mapping": [
+        {
+          "source_output": "go",
+          "target_input": "_run"
+        }
+      ]
+    },
+    {
+      "source": "node1",
+      "target": "node3",
+      "data_mapping": [
+        {
+          "source_output": "go",
+          "target_input": "_run"
+        }
+      ]
+    },
+    {
+      "source": "node1",
+      "target": "node4",
+      "data_mapping": [
+        {
+          "source_output": "go",
+          "target_input": "_run"
+        }
+      ]
+    },
+    {
+      "source": "node1",
+      "target": "node5",
+      "data_mapping": [
+        {
+          "source_output": "go",
+          "target_input": "_run"
+        }
+      ]
+    },
+    {
+      "source": "node1",
+      "target": "node6",
+      "data_mapping": [
+        {
+          "source_output": "go",
+          "target_input": "_run"
+        }
+      ]
+    }
+  ]
+}

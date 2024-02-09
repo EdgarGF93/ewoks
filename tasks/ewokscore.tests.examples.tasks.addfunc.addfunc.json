@@ -1,0 +1,15 @@
+{
+  "task_type": "method",
+  "task_identifier": "ewokscore.tests.examples.tasks.addfunc.addfunc",
+  "required_input_names": [
+    "arg"
+  ],
+  "optional_input_names": [],
+  "output_names": [
+    "return_value"
+  ],
+  "category": "ewokscore",
+  "description": "Add 1 to the first argument",
+  "icon": "default.png",
+  "label": "addfunc"
+}

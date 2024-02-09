@@ -1,0 +1,17 @@
+{
+  "task_type": "class",
+  "task_identifier": "ewokscore.tests.examples.tasks.errorsumtask.ErrorSumTask",
+  "required_input_names": [],
+  "optional_input_names": [
+    "b",
+    "raise_error",
+    "a"
+  ],
+  "output_names": [
+    "result"
+  ],
+  "category": "ewokscore",
+  "description": "Add two number with intentional exception",
+  "icon": "default.png",
+  "label": "ErrorSumTask"
+}

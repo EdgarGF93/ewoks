@@ -1,0 +1,18 @@
+{
+  "task_type": "class",
+  "task_identifier": "ewokscore.tests.examples.tasks.sumtask.SumTask",
+  "required_input_names": [
+    "a"
+  ],
+  "optional_input_names": [
+    "b",
+    "delay"
+  ],
+  "output_names": [
+    "result"
+  ],
+  "category": "ewokscore",
+  "description": "Add two numbers with a delay",
+  "icon": "default.png",
+  "label": "SumTask"
+}

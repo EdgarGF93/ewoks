@@ -1,0 +1,29 @@
+{
+  "task_type": "class",
+  "task_identifier": "ewoksxrpd.tasks.nexus.SaveNexusPattern1D",
+  "required_input_names": [
+    "url",
+    "y",
+    "x",
+    "xunits"
+  ],
+  "optional_input_names": [
+    "retry_timeout",
+    "nxprocess_name",
+    "metadata",
+    "external_url",
+    "nxmeasurement_name",
+    "bliss_scan_url",
+    "nxprocess_as_default",
+    "yerror",
+    "header",
+    "retry_period"
+  ],
+  "output_names": [
+    "saved"
+  ],
+  "category": "ewoksxrpd",
+  "description": "Save single diffractogram in HDF5/NeXus format",
+  "icon": "default.png",
+  "label": "SaveNexusPattern1D"
+}

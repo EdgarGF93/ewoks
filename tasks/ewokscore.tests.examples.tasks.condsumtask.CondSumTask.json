@@ -1,0 +1,19 @@
+{
+  "task_type": "class",
+  "task_identifier": "ewokscore.tests.examples.tasks.condsumtask.CondSumTask",
+  "required_input_names": [
+    "a"
+  ],
+  "optional_input_names": [
+    "b",
+    "delay"
+  ],
+  "output_names": [
+    "too_small",
+    "result"
+  ],
+  "category": "ewokscore",
+  "description": "Check whether a value is too small",
+  "icon": "default.png",
+  "label": "CondSumTask"
+}

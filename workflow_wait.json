@@ -1,0 +1,92 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {
+    "id": "wait",
+    "schema_version": "1.0"
+  },
+  "nodes": [
+    {
+      "task_type": "class",
+      "task_identifier": "tasks_parallel.Launcher",
+      "id": "node1"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "tasks_parallel.Wait1s",
+      "id": "node2"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "tasks_parallel.Wait1s",
+      "id": "node3"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "tasks_parallel.Wait1s",
+      "id": "node4"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "tasks_parallel.Wait1s",
+      "id": "node5"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "tasks_parallel.Wait1s",
+      "id": "node6"
+    }
+  ],
+  "links": [
+    {
+      "data_mapping": [
+        {
+          "source_output": "go",
+          "target_input": "_run"
+        }
+      ],
+      "source": "node1",
+      "target": "node2"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "go",
+          "target_input": "_run"
+        }
+      ],
+      "source": "node1",
+      "target": "node3"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "go",
+          "target_input": "_run"
+        }
+      ],
+      "source": "node1",
+      "target": "node4"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "go",
+          "target_input": "_run"
+        }
+      ],
+      "source": "node1",
+      "target": "node5"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "go",
+          "target_input": "_run"
+        }
+      ],
+      "source": "node1",
+      "target": "node6"
+    }
+  ]
+}

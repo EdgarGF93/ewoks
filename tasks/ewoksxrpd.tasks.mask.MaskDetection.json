@@ -1,0 +1,23 @@
+{
+  "task_type": "class",
+  "task_identifier": "ewoksxrpd.tasks.mask.MaskDetection",
+  "required_input_names": [
+    "image2",
+    "monitor2",
+    "image1",
+    "monitor1"
+  ],
+  "optional_input_names": [
+    "monitor_ratio_margin",
+    "retry_timeout",
+    "retry_period",
+    "smooth"
+  ],
+  "output_names": [
+    "mask"
+  ],
+  "category": "ewoksxrpd",
+  "description": "The pixels with the same ratio as the monitor ratio within an error margin\n    are considered \"good pixels\". The others are masked off.\n\n    The error margin `monitor_ratio_margin` is a fraction of the monitor ratio (0.1 by default).\n\n    Masked pixels have value `1`. The mask can be smoothed with `smooth > 0` to avoid border effects.\n\n    .. code:\n\n        monitor_ratio = monitor_high / monitor_low\n        image_ratio = image_high / image_low\n\n        bad = abs(image_ratio - monitor_ratio) > monitor_ratio * monitor_ratio_margin\n    ",
+  "icon": "default.png",
+  "label": "MaskDetection"
+}

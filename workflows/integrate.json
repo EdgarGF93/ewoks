@@ -1,0 +1,100 @@
+{
+  "graph": {
+    "id": "integrate"
+  },
+  "nodes": [
+    {
+      "id": "ewoksxrpd.tasks.integrate.Integrate1D0",
+      "label": "Integrate1D",
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.integrate.Integrate1D",
+      "default_inputs": [
+        {
+          "name": "image",
+          "value": "/users/edgar1993a/work/ewoks_parallel/LaB6.edf"
+        },
+        {
+          "name": "mask",
+          "value": "/users/edgar1993a/work/ewoks_parallel/lab6_mask.edf"
+        }
+      ],
+      "uiProps": {
+        "icon": "default.png",
+        "position": {
+          "x": 780,
+          "y": 240
+        }
+      }
+    },
+    {
+      "id": "ewoksxrpd.tasks.pyfaiconfig.PyFaiConfig0",
+      "label": "PyFaiConfig",
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.pyfaiconfig.PyFaiConfig",
+      "default_inputs": [
+        {
+          "name": "filename",
+          "value": "/users/edgar1993a/work/ewoks_parallel/lab6.poni"
+        }
+      ],
+      "uiProps": {
+        "icon": "default.png",
+        "position": {
+          "x": 465,
+          "y": 165
+        }
+      }
+    },
+    {
+      "id": "ewoksxrpd.tasks.ascii.SaveResult1d0",
+      "label": "SaveResult1d",
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.ascii.SaveResult1d",
+      "default_inputs": [
+        {
+          "name": "filename",
+          "value": "xxxxxx.dat"
+        }
+      ],
+      "uiProps": {
+        "icon": "default.png",
+        "position": {
+          "x": 1035,
+          "y": 255
+        }
+      }
+    }
+  ],
+  "links": [
+    {
+      "source": "ewoksxrpd.tasks.pyfaiconfig.PyFaiConfig0",
+      "target": "ewoksxrpd.tasks.integrate.Integrate1D0",
+      "data_mapping": [
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        }
+      ],
+      "map_all_data": false
+    },
+    {
+      "source": "ewoksxrpd.tasks.integrate.Integrate1D0",
+      "target": "ewoksxrpd.tasks.ascii.SaveResult1d0",
+      "data_mapping": [
+        {
+          "source_output": "result",
+          "target_input": "result"
+        }
+      ],
+      "map_all_data": false
+    }
+  ]
+}

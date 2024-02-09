@@ -1,0 +1,19 @@
+{
+  "task_type": "class",
+  "task_identifier": "ewoksid22.wait.WaitScansFinished",
+  "required_input_names": [
+    "filename"
+  ],
+  "optional_input_names": [
+    "retry_timeout",
+    "entries"
+  ],
+  "output_names": [
+    "entries",
+    "filename"
+  ],
+  "category": "ewoksid22",
+  "description": null,
+  "icon": "default.png",
+  "label": "WaitScansFinished"
+}

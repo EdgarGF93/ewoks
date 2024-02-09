@@ -1,0 +1,13 @@
+{
+  "task_type": "method",
+  "task_identifier": "ewokscore.tests.examples.tasks.simplemethods.append",
+  "required_input_names": [],
+  "optional_input_names": [],
+  "output_names": [
+    "return_value"
+  ],
+  "category": "ewokscore",
+  "description": "Return positional arguments as a tuple",
+  "icon": "default.png",
+  "label": "append"
+}

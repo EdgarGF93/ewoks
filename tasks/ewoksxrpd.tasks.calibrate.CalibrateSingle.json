@@ -1,0 +1,31 @@
+{
+  "task_type": "class",
+  "task_identifier": "ewoksxrpd.tasks.calibrate.CalibrateSingle",
+  "required_input_names": [
+    "calibrant",
+    "geometry",
+    "detector",
+    "image",
+    "energy"
+  ],
+  "optional_input_names": [
+    "robust",
+    "retry_timeout",
+    "max_rings",
+    "fixed",
+    "retry_period",
+    "detector_config"
+  ],
+  "output_names": [
+    "chi2",
+    "geometry",
+    "detector",
+    "detector_config",
+    "energy",
+    "rings"
+  ],
+  "category": "ewoksxrpd",
+  "description": "Single distance and energy calibration.",
+  "icon": "default.png",
+  "label": "CalibrateSingle"
+}

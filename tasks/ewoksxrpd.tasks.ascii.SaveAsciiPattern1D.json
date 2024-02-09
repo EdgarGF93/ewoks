@@ -1,0 +1,22 @@
+{
+  "task_type": "class",
+  "task_identifier": "ewoksxrpd.tasks.ascii.SaveAsciiPattern1D",
+  "required_input_names": [
+    "y",
+    "x",
+    "xunits",
+    "filename"
+  ],
+  "optional_input_names": [
+    "yerror",
+    "metadata",
+    "header"
+  ],
+  "output_names": [
+    "saved"
+  ],
+  "category": "ewoksxrpd",
+  "description": "Save single diffractogram in ASCII format",
+  "icon": "default.png",
+  "label": "SaveAsciiPattern1D"
+}

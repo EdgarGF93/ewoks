@@ -1,0 +1,43 @@
+{
+  "task_type": "class",
+  "task_identifier": "ewoksxrpd.tasks.integrate.IntegrateBlissScanWithoutSaving",
+  "required_input_names": [
+    "detector_name",
+    "filename",
+    "geometry",
+    "detector",
+    "scan",
+    "energy"
+  ],
+  "optional_input_names": [
+    "retry_period",
+    "reference",
+    "retry_timeout",
+    "demo",
+    "fixed_integration_options",
+    "references",
+    "monitor_name",
+    "darkcurrent",
+    "mask",
+    "monitors",
+    "subscan",
+    "flatfield",
+    "maximum_persistent_workers",
+    "scan_memory_url",
+    "counter_names",
+    "integration_options",
+    "detector_config"
+  ],
+  "output_names": [
+    "intensity_error",
+    "azimuthal",
+    "radial_units",
+    "intensity",
+    "radial",
+    "info"
+  ],
+  "category": "ewoksxrpd",
+  "description": "1D or 2D integration of a single detector in a single Bliss scan without saving.",
+  "icon": "default.png",
+  "label": "IntegrateBlissScanWithoutSaving"
+}

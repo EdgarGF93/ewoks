@@ -1,0 +1,11 @@
+{
+  "task_type": "class",
+  "task_identifier": "ewokscore.tests.examples.tasks.nooutputtask.NoOutputTask",
+  "required_input_names": [],
+  "optional_input_names": [],
+  "output_names": [],
+  "category": "ewokscore",
+  "description": "A task without outputs",
+  "icon": "default.png",
+  "label": "NoOutputTask"
+}

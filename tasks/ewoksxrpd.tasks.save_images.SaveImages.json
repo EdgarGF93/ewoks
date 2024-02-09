@@ -1,0 +1,18 @@
+{
+  "task_type": "class",
+  "task_identifier": "ewoksxrpd.tasks.save_images.SaveImages",
+  "required_input_names": [
+    "output_dir",
+    "image_uris"
+  ],
+  "optional_input_names": [
+    "ext"
+  ],
+  "output_names": [
+    "output_paths"
+  ],
+  "category": "ewoksxrpd",
+  "description": "Save images with monitor and other metadata",
+  "icon": "default.png",
+  "label": "SaveImages"
+}

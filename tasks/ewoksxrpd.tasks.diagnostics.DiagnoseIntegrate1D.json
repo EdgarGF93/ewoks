@@ -1,0 +1,30 @@
+{
+  "task_type": "class",
+  "task_identifier": "ewoksxrpd.tasks.diagnostics.DiagnoseIntegrate1D",
+  "required_input_names": [
+    "y",
+    "x",
+    "xunits"
+  ],
+  "optional_input_names": [
+    "figsize",
+    "retry_timeout",
+    "calibrant",
+    "filename",
+    "show",
+    "dpi",
+    "fontsize",
+    "yerror",
+    "pause",
+    "retry_period",
+    "energy",
+    "scaling"
+  ],
+  "output_names": [
+    "saved"
+  ],
+  "category": "ewoksxrpd",
+  "description": "Quality of a pyFAI integration",
+  "icon": "default.png",
+  "label": "DiagnoseIntegrate1D"
+}

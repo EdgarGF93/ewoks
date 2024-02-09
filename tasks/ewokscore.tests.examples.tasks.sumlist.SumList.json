@@ -1,0 +1,17 @@
+{
+  "task_type": "class",
+  "task_identifier": "ewokscore.tests.examples.tasks.sumlist.SumList",
+  "required_input_names": [
+    "list"
+  ],
+  "optional_input_names": [
+    "delay"
+  ],
+  "output_names": [
+    "sum"
+  ],
+  "category": "ewokscore",
+  "description": "Add items from a list",
+  "icon": "default.png",
+  "label": "SumList"
+}

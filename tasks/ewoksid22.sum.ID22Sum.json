@@ -1,0 +1,29 @@
+{
+  "task_type": "class",
+  "task_identifier": "ewoksid22.sum.ID22Sum",
+  "required_input_names": [
+    "binsize",
+    "filename"
+  ],
+  "optional_input_names": [
+    "outprefix",
+    "resfile",
+    "advanced",
+    "ascii_extension",
+    "raw_filename",
+    "sum_single",
+    "scaling",
+    "entries",
+    "lowtth",
+    "outdirs",
+    "primary_outdir",
+    "sum_all"
+  ],
+  "output_names": [
+    "outfile"
+  ],
+  "category": "ewoksid22",
+  "description": null,
+  "icon": "default.png",
+  "label": "ID22Sum"
+}

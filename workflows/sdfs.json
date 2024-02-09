@@ -1,0 +1,59 @@
+{
+  "graph": {
+    "id": "sdfs"
+  },
+  "nodes": [
+    {
+      "id": "node1",
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.background.SubtractBackground",
+      "default_inputs": [
+        {
+          "name": "image",
+          "value": "/users/edgar1993a/work/ewoks_parallel/rayonix_A1_spitch_0.12_000_0000.edf"
+        },
+        {
+          "name": "background",
+          "value": "/users/edgar1993a/work/ewoks_parallel/rayonix_10s_spitch_0.12_000_0000.edf"
+        },
+        {
+          "name": "monitor",
+          "value": 0
+        },
+        {
+          "name": "background_monitor",
+          "value": 1
+        }
+      ],
+      "uiProps": {
+        "position": {
+          "x": 12,
+          "y": 12
+        }
+      }
+    },
+    {
+      "id": "node2",
+      "task_type": "class",
+      "task_identifier": "tasks_parallel.PlotImage",
+      "uiProps": {
+        "position": {
+          "x": 232,
+          "y": 12
+        }
+      }
+    }
+  ],
+  "links": [
+    {
+      "source": "node1",
+      "target": "node2",
+      "data_mapping": [
+        {
+          "source_output": "image",
+          "target_input": "image"
+        }
+      ]
+    }
+  ]
+}

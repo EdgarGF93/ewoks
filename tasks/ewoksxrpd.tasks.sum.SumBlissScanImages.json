@@ -1,0 +1,26 @@
+{
+  "task_type": "class",
+  "task_identifier": "ewoksxrpd.tasks.sum.SumBlissScanImages",
+  "required_input_names": [
+    "output_filename",
+    "scan",
+    "detector_name",
+    "filename"
+  ],
+  "optional_input_names": [
+    "retry_timeout",
+    "monitor_name",
+    "subscan",
+    "skip_dark",
+    "output_process",
+    "retry_period",
+    "scan_memory_url"
+  ],
+  "output_names": [
+    "output_uri"
+  ],
+  "category": "ewoksxrpd",
+  "description": "Sum images of a single camera of a single Bliss scan",
+  "icon": "default.png",
+  "label": "SumBlissScanImages"
+}

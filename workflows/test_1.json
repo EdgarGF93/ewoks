@@ -1,0 +1,55 @@
+{
+  "graph": {
+    "id": "test_1"
+  },
+  "nodes": [
+    {
+      "id": "taskSkeleton2",
+      "label": "taskSkeleton",
+      "task_type": "ppfmethod",
+      "task_identifier": "taskSkeleton",
+      "uiProps": {
+        "position": {
+          "x": 945,
+          "y": 150
+        }
+      }
+    },
+    {
+      "id": "taskSkeleton1",
+      "label": "taskSkeleton",
+      "task_type": "ppfmethod",
+      "task_identifier": "taskSkeleton",
+      "uiProps": {
+        "position": {
+          "x": 945,
+          "y": 300
+        }
+      }
+    },
+    {
+      "id": "taskSkeleton0",
+      "label": "taskSkeleton",
+      "task_type": "ppfmethod",
+      "task_identifier": "taskSkeleton",
+      "uiProps": {
+        "position": {
+          "x": 690,
+          "y": 225
+        }
+      }
+    }
+  ],
+  "links": [
+    {
+      "source": "taskSkeleton0",
+      "target": "taskSkeleton2",
+      "map_all_data": true
+    },
+    {
+      "source": "taskSkeleton0",
+      "target": "taskSkeleton1",
+      "map_all_data": true
+    }
+  ]
+}

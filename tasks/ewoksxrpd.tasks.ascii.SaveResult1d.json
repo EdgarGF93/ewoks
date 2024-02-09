@@ -1,0 +1,16 @@
+{
+  "task_type": "class",
+  "task_identifier": "ewoksxrpd.tasks.ascii.SaveResult1d",
+  "required_input_names": [
+    "result",
+    "filename"
+  ],
+  "optional_input_names": [],
+  "output_names": [
+    "saved"
+  ],
+  "category": "ewoksxrpd",
+  "description": null,
+  "icon": "default.png",
+  "label": "SaveResult1d"
+}
