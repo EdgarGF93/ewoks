@@ -1,0 +1,48 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {
+    "id": "graph_self",
+    "schema_version": "1.0"
+  },
+  "nodes": [
+    {
+      "task_type": "class",
+      "task_identifier": "tasks_parallel.SplitString",
+      "id": "node_self"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "tasks_parallel.PrintStridng",
+      "id": "node_print"
+    }
+  ],
+  "links": [
+    {
+      "data_mapping": [
+        {
+          "source_output": "index",
+          "target_input": "index"
+        }
+      ],
+      "conditions": [
+        {
+          "source_output": "_continue",
+          "value": true
+        }
+      ],
+      "source": "node_self",
+      "target": "node_self"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "str_out",
+          "target_input": "msg"
+        }
+      ],
+      "source": "node_self",
+      "target": "node_print"
+    }
+  ]
+}

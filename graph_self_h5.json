@@ -1,0 +1,73 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {
+    "id": "h5_branch",
+    "schema_version": "1.0"
+  },
+  "nodes": [
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.pyfaiconfig",
+      "id": "node_poni"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "tasks_parallel.SplitH5",
+      "id": "node_h5"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.Integrate1DList",
+      "id": "node_int"
+    }
+  ],
+  "links": [
+    {
+      "data_mapping": [
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        },
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        }
+      ],
+      "source": "node_poni",
+      "target": "node_int"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "dataset",
+          "target_input": "images"
+        },
+        {
+          "source_output": "output_file",
+          "target_input": "output_file"
+        }
+      ],
+      "source": "node_h5",
+      "target": "node_int"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "_continue",
+          "target_input": "_continue"
+        },
+        {
+          "source_output": "chunk_index",
+          "target_input": "chunk_index"
+        }
+      ],
+      "source": "node_h5",
+      "target": "node_h5"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {
+    "id": "graph_loop",
+    "schema_version": "1.0"
+  },
+  "nodes": [
+    {
+      "task_type": "class",
+      "task_identifier": "tasks_parallel.LoopPrint",
+      "id": "node_print"
+    }
+  ],
+  "links": [
+    {
+      "data_mapping": [
+        {
+          "source_output": "time",
+          "target_input": "time"
+        }
+      ],
+      "conditions": [
+        {
+          "source_output": "repeat",
+          "value": true
+        }
+      ],
+      "source": "node_print",
+      "target": "node_print"
+    }
+  ]
+}
