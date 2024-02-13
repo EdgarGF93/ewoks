@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from ewoks import execute_graph, save_graph, convert_graph
 from pathlib import Path
 import h5py, hdf5plugin
+import fabio
 class SplitFrames(
         Task,
         input_names=["h5file"],
@@ -170,43 +171,43 @@ def generate_wait_branched_graph(nbranches=5):
 
 from ewoksxrpd.tasks import pyfaiconfig
 import ewokscore
-class SplitH5(
-    Task,
-    input_names=["h5_file", "chunk_size", "chunk_index", "_continue"],
-    output_names=["dataset", "chunk_index", "_continue", "output_file"],
-):
-    def run(self):
-        if self.missing_inputs._continue:
-            _continue = True
-        else:
-            _continue = self.inputs._continue
+# class SplitH5(
+#     Task,
+#     input_names=["h5_file", "chunk_size", "chunk_index", "_continue"],
+#     output_names=["dataset", "chunk_index", "_continue", "output_file"],
+# ):
+#     def run(self):
+#         if self.missing_inputs._continue:
+#             _continue = True
+#         else:
+#             _continue = self.inputs._continue
 
-        if not _continue:
-            self.outputs.dataset = None
-        else:
-            if self.missing_inputs.chunk_index:
-                chunk_index = 0
-            else:
-                chunk_index = self.inputs.chunk_index
+#         if not _continue:
+#             self.outputs.dataset = None
+#         else:
+#             if self.missing_inputs.chunk_index:
+#                 chunk_index = 0
+#             else:
+#                 chunk_index = self.inputs.chunk_index
             
-            if self.missing_inputs.chunk_size:
-                chunk_size = 100
-            else:
-                chunk_size = self.inputs.chunk_size
+#             if self.missing_inputs.chunk_size:
+#                 chunk_size = 100
+#             else:
+#                 chunk_size = self.inputs.chunk_size
 
-            range_frame = [chunk_index * chunk_size, (chunk_index + 1) * chunk_size]
-            with h5py.File(self.inputs.h5_file) as f:
-                full_dataset = f["entry_0000"]["measurement"]["data"]
-                dataset = full_dataset[range_frame[0]:range_frame[1]]
+#             range_frame = [chunk_index * chunk_size, (chunk_index + 1) * chunk_size]
+#             with h5py.File(self.inputs.h5_file) as f:
+#                 full_dataset = f["entry_0000"]["measurement"]["data"]
+#                 dataset = full_dataset[range_frame[0]:range_frame[1]]
 
-            if len(dataset) != chunk_size:
-                self.outputs._continue = False
-            else:
-                self.outputs._continue = True
+#             if len(dataset) != chunk_size:
+#                 self.outputs._continue = False
+#             else:
+#                 self.outputs._continue = True
 
-            self.outputs.dataset = dataset
-            self.outputs.output_file = f"integration_chunk_{chunk_index}.h5"
-            self.outputs.chunk_index = chunk_index + 1
+#             self.outputs.dataset = dataset
+#             self.outputs.output_file = f"integration_chunk_{chunk_index}.h5"
+#             self.outputs.chunk_index = chunk_index + 1
 
 
             
@@ -372,11 +373,15 @@ class MeasureH5(
             self.outputs.Nframes = Nframes
 
 
+
+
+
+
 class SplitH5(
     Task,
     input_names=["Nframes"],
-    optional_input_names=["chunk_size", "Nframes", "chunk_index", "repeat"],
-    output_names=[],
+    optional_input_names=["chunk_size", "Nframes", "chunk_index"],
+    output_names=["chunk_size", "Nframes", "chunk_index", "frame_range", "repeat"],
 ):
     def run(self):
         Nframes = self.inputs.Nframes
@@ -390,9 +395,29 @@ class SplitH5(
             chunk_index = 0
         else:
             chunk_index = self.inputs.chunk_index
-        range_frames = [chunk_index * chunk_size, (chunk_index + 1) * chunk_size]
+        frame_range = [chunk_index * chunk_size, (chunk_index + 1) * chunk_size]
 
-        if range_frames[0] == Nframes:
+        if frame_range[0] >= Nframes:
+            self.outputs.frame_range = None
+            self.outputs.repeat = False
+        elif frame_range[1] >= Nframes:
+            self.outputs.frame_range = frame_range
+            self.outputs.repeat = False
+        else:
+            self.outputs.frame_range = frame_range
+            self.outputs.repeat = True
+        self.outputs.chunk_size = chunk_size
+        self.outputs.chunk_index = chunk_index + 1
+
+
+
+
+class PrintRange(
+    Task,
+    input_names=["frame_range"],
+):
+    def run(self):
+        print(self.inputs.frame_range)
 
 
 
@@ -402,6 +427,309 @@ class SplitH5(
 
 
 
+
+
+def split_h5():
+    node_measure = {"id" : "node_measure", "task_type" : "class", "task_identifier" : "tasks_parallel.MeasureH5"}
+    node_split = {"id" : "node_split", "task_type" : "class", "task_identifier" : "tasks_parallel.SplitH5"}
+    node_print = {"id" : "node_print", "task_type" : "class", "task_identifier" : "tasks_parallel.PrintRange"}
+
+    link_measure = {"source" : "node_measure", "target" : "node_split", "data_mapping" : [{"source_output" : "Nframes", "target_input" : "Nframes"}]}
+    link_split = {"source" : "node_split", "target" : "node_print", "data_mapping" : [{"source_output" : "frame_range", "target_input" : "frame_range"}]}
+    link_split_self = {"source" : "node_split", "target" : "node_split", "data_mapping" : [{"source_output" : "chunk_size", "target_input" : "chunk_size"},
+                                                                                           {"source_output" : "Nframes", "target_input" : "Nframes"},
+                                                                                           {"source_output" : "chunk_index", "target_input" : "chunk_index"},
+                                                                                           ],
+                                                                         "conditions" : [{"source_output": "repeat", "value": True}],
+                    }
+
+    graph = {
+        "graph" : {"id" : "graph_splith5"},
+        "nodes" : [node_measure, node_split, node_print],
+        "links" : [link_measure, link_split, link_split_self],
+    }
+    convert_graph(graph, "test_h5_split.json")
+    execute_graph(
+        graph=graph,
+        engine="ppf",
+        inputs=[
+            {"name" : "h5file", "value" : "/users/edgar1993a/work/ewoks_parallel/p1m_dummy_100frames.h5", "id" : "node_measure"},
+            {"name" : "chunk_size", "value" : 17, "id" : "node_split"},
+        ]
+    )
+
+class SliceH5(
+    Task,
+    input_names=["h5file", "frame_range"],
+    output_names=["dataset", "output_file"],
+):
+    def run(self):
+        h5_file = self.inputs.h5file
+        frame_range = self.inputs.frame_range
+        if Path(h5_file).is_file():
+            with h5py.File(h5_file) as f:
+                dataset = f["entry_0000"]["measurement"]["data"][frame_range[0]:frame_range[1]]
+            self.outputs.dataset = dataset
+            self.outputs.output_file = h5_file.replace(".h5", f"_{str(frame_range)}.h5")
+
+
+
+
+def integrate_h5_section():
+    node_measure = {"id" : "node_measure", "task_type" : "class", "task_identifier" : "tasks_parallel.MeasureH5"}
+    node_split = {"id" : "node_split", "task_type" : "class", "task_identifier" : "tasks_parallel.SplitH5"}
+    node_slice_h5 = {"id" : "node_slice_h5", "task_type" : "class", "task_identifier" : "tasks_parallel.SliceH5"}
+    node_pyfai_config = {"id" : "node_pyfai_config", "task_type" : "class", "task_identifier" : "ewoksxrpd.tasks.pyfaiconfig.PyFaiConfig"}
+    node_integrate = {"id" : "node_integration", "task_type" : "class", "task_identifier" : "ewoksxrpd.tasks.integrate.Integrate1DList"}
+
+    link_measure = {"source" : "node_measure", "target" : "node_split", "data_mapping" : [{"source_output" : "Nframes", "target_input" : "Nframes"}]}
+    link_split = {"source" : "node_split", "target" : "node_slice_h5", "data_mapping" : [{"source_output" : "frame_range", "target_input" : "frame_range"}]}
+    link_split_self = {"source" : "node_split", "target" : "node_split", "data_mapping" : [{"source_output" : "chunk_size", "target_input" : "chunk_size"},
+                                                                                           {"source_output" : "Nframes", "target_input" : "Nframes"},
+                                                                                           {"source_output" : "chunk_index", "target_input" : "chunk_index"},
+                                                                                           ],
+                                                                         "conditions" : [{"source_output": "repeat", "value": True}],
+                    }
+    link_config = {"source" : "node_pyfai_config", "target" : "node_integration", "data_mapping" : [{"source_output" : "energy", "target_input" : "energy"},
+                                                                                              {"source_output" : "detector", "target_input" : "detector"},
+                                                                                              {"source_output" : "geometry", "target_input" : "geometry"},
+                                                                                              ]}
+    link_integration = {"source" : "node_slice_h5", "target" : "node_integration", "data_mapping" : [{"source_output" : "dataset", "target_input" : "images"},
+                                                                                                     {"source_output" : "output_file", "target_input" : "output_file"},
+                                                                                                     ]}
+    
+    
+
+    FILE_H5 = "/users/edgar1993a/work/ewoks_parallel/p1m_dummy_1000frames.h5"
+    OUTPUT_FILE = "/users/edgar1993a/work/ewoks_parallel/p1m_dummy_10frames_out.h5"
+    PONI_FILE = "/users/edgar1993a/work/ewoks_parallel/fake_poni.poni"
+    CHUNK = 10
+    INTEGRATION_OPTIONS = {
+        "npt_rad" : 2000,
+    }
+
+    graph = {
+        "graph" : {"id" : "integrate_slice_h5"},
+        "nodes" : [node_measure, node_split, node_slice_h5, node_pyfai_config, node_integrate],
+        "links" : [link_measure, link_split, link_split_self, link_config, link_integration],
+    }
+
+    execute_graph(
+        graph=graph,
+        engine="ppf",
+        inputs=[
+            {"name" : "h5file", "value" : FILE_H5, "id" : "node_measure"},
+            {"name" : "h5file", "value" : FILE_H5, "id" : "node_slice_h5"},
+            {"name" : "chunk_size", "value" : CHUNK, "id" : "node_split"},
+            {"name" : "filename", "value" : PONI_FILE, "id" : "node_pyfai_config"},
+            # {"name" : "output_file", "value" : OUTPUT_FILE, "id" : "node_integration"},
+            # {"name" : "integration_options", "value" : INTEGRATION_OPTIONS, "id" : "node_integration"},
+        ]
+    )
+
+def direct_integration():
+    node_pyfai_config = {"id" : "node_pyfai_config", "task_type" : "class", "task_identifier" : "ewoksxrpd.tasks.pyfaiconfig.PyFaiConfig"}
+    node_integrate = {"id" : "node_integration", "task_type" : "class", "task_identifier" : "ewoksxrpd.tasks.integrate.Integrate1DList"}
+    link_config = {"source" : "node_pyfai_config", "target" : "node_integration", "data_mapping" : [{"source_output" : "energy", "target_input" : "energy"},
+                                                                                                    {"source_output" : "detector", "target_input" : "detector"},
+                                                                                                    {"source_output" : "geometry", "target_input" : "geometry"},
+                                                                                  ]}
+    
+    # FILE_H5 = "/users/edgar1993a/work/ewoks_parallel/p1m_dummy_1000frames.h5"
+    # PONI_FILE = "/users/edgar1993a/work/ewoks_parallel/fake_poni.poni"
+    FILE_H5 = "/users/edgar1993a/work/UM_2024/Eiger2_CeO2_75keV.h5"
+    OUTPUT_FILE = "/users/edgar1993a/work/ewoks_parallel/Eiger2_CeO2_75keV_out.h5"
+    PONI_FILE = "/users/edgar1993a/work/UM_2024/eiger.poni"
+
+
+    graph = {
+        "graph" : {"id" : "integrate_slice_h5"},
+        "nodes" : [node_pyfai_config, node_integrate],
+        "links" : [link_config],
+    }
+
+    execute_graph(
+        graph=graph,
+        engine="ppf",
+        inputs=[
+            {"name" : "images", "value" : FILE_H5, "id" : "node_integration"},
+            {"name" : "output_file", "value" : OUTPUT_FILE, "id" : "node_integration"},
+            {"name" : "filename", "value" : PONI_FILE, "id" : "node_pyfai_config"},
+        ]
+    )
+
+
+
+def direct_integration_edf_files():
+    node_pyfai_config = {"id" : "node_pyfai_config", "task_type" : "class", "task_identifier" : "ewoksxrpd.tasks.pyfaiconfig.PyFaiConfig"}
+    node_integrate = {"id" : "node_integration", "task_type" : "class", "task_identifier" : "ewoksxrpd.tasks.integrate.Integrate1DList"}
+    link_config = {"source" : "node_pyfai_config", "target" : "node_integration", "data_mapping" : [{"source_output" : "energy", "target_input" : "energy"},
+                                                                                                    {"source_output" : "detector", "target_input" : "detector"},
+                                                                                                    {"source_output" : "geometry", "target_input" : "geometry"},
+                                                                                  ]}
+    
+    FILES = [str(item) for item in Path("/users/edgar1993a/work/ewoks_parallel/edf_data").glob("*.edf")]
+    OUTPUT_FILE = "/users/edgar1993a/work/ewoks_parallel/edf_dummy_out.h5"
+    PONI_FILE = "/users/edgar1993a/work/ewoks_parallel/fake_poni.poni"
+    graph = {
+        "graph" : {"id" : "integrate_edf_1"},
+        "nodes" : [
+            node_pyfai_config, 
+            node_integrate, 
+        ],
+        "links" : [
+            link_config, 
+        ],
+    }
+    convert_graph(graph, "edf_integration.json")
+    execute_graph(
+        graph=graph,
+        engine="ppf",
+        inputs=[
+            {"name" : "images", "value" : FILES, "id" : "node_integration"},
+            {"name" : "output_file", "value" : OUTPUT_FILE, "id" : "node_integration"},
+            {"name" : "filename", "value" : PONI_FILE, "id" : "node_pyfai_config"},
+        ]
+    )
+
+
+
+class SplitList(
+    Task,
+    input_names=["list_filenames"],
+    optional_input_names=["chunk_size", "chunk_index"],
+    output_names=["chunk_size", "list_filenames", "chunk_index", "images", "repeat", "output_file"],
+):
+    def run(self):
+        list_filenames = self.inputs.list_filenames
+        self.outputs.list_filenames = list_filenames
+
+        if self.missing_inputs.chunk_size:
+            chunk_size = 100
+        else:
+            chunk_size = self.inputs.chunk_size
+        if self.missing_inputs.chunk_index:
+            chunk_index = 0
+        else:
+            chunk_index = self.inputs.chunk_index
+        frame_range = [chunk_index * chunk_size, (chunk_index + 1) * chunk_size]
+
+        self.outputs.chunk_size = chunk_size
+        self.outputs.chunk_index = chunk_index + 1
+        self.outputs.output_file = f"/users/edgar1993a/work/ewoks_parallel/edf_dummy_out_{chunk_index}.h5"
+
+
+
+        if frame_range[0] >= len(list_filenames):
+            self.outputs.images = None
+            self.outputs.repeat = False
+        elif frame_range[1] >= len(list_filenames):
+            self.outputs.images = list_filenames[frame_range[0]:frame_range[1]]
+            self.outputs.repeat = False
+        else:
+            self.outputs.images = list_filenames[frame_range[0]:frame_range[1]]
+            self.outputs.repeat = True
+
+        self.outputs
+
+
+class Buffer(
+    Task,
+    optional_input_names=["detector", "energy", "geometry", "images", "output_file"],
+    output_names = ["detector", "energy", "geometry", "images", "output_file"],
+):
+    def run(self):
+        self.outputs.detector = self.get_input_value(key="detector", default=None)
+        self.outputs.energy = self.get_input_value(key="energy", default=None)
+        self.outputs.geometry = self.get_input_value(key="geometry", default=None)
+        self.outputs.images = self.get_input_value(key="images", default=None)
+        self.outputs.output_file = self.get_input_value(key="output_file", default=None)
+    
+
+class DummyIntegrationList(
+    Task,
+    input_names=["detector", "energy", "geometry", "images", "output_file"],
+):
+    def run(self):
+        print(self.inputs.images)
+        print(self.inputs.output_file)
+
+
+
+
+
+def parallel_integration_edf_files():
+    node_pyfai_config = {"id" : "node_pyfai_config", "task_type" : "class", "task_identifier" : "ewoksxrpd.tasks.pyfaiconfig.PyFaiConfig"}
+    # node_integrate = {"id" : "node_integration", "task_type" : "class", "task_identifier" : "ewoksxrpd.tasks.integrate.Integrate1DList"}
+    node_integrate = {"id" : "node_integrate", "task_type" : "class", "task_identifier" : "tasks_parallel.DummyIntegrationList"}
+    node_split = {"id" : "node_split", "task_type" : "class", "task_identifier" : "tasks_parallel.SplitList"}
+    node_buffer = {"id" : "node_buffer", "task_type" : "class", "task_identifier" : "tasks_parallel.Buffer"}
+
+    # link_config = {"source" : "node_pyfai_config", "target" : "node_integrate", "data_mapping" : [{"source_output" : "energy", "target_input" : "energy"},
+    #                                                                                                 {"source_output" : "detector", "target_input" : "detector"},
+    #                                                                                                 {"source_output" : "geometry", "target_input" : "geometry"},
+    #                                                                               ]}
+    
+    link_buffer_1 = {
+        "source" : "node_split", 
+        "target" : "node_buffer", 
+        "data_mapping" : [
+            {"source_output" : "images", "target_input" : "images"},
+            {"source_output" : "output_file", "target_input" : "output_file"},
+        ],
+    }
+
+    link_buffer_2 = {
+        "source" : "node_pyfai_config", 
+        "target" : "node_buffer", 
+        "data_mapping" : [
+            {"source_output" : "energy", "target_input" : "energy"},
+            {"source_output" : "detector", "target_input" : "detector"},
+            {"source_output" : "geometry", "target_input" : "geometry"},
+        ],
+    }
+
+    
+    link_final = {
+        "source" : "node_buffer", 
+        "target" : "node_integrate", 
+        "data_mapping" : [
+            {"source_output" : "images", "target_input" : "images"},
+            {"source_output" : "output_file", "target_input" : "output_file"},
+            {"source_output" : "energy", "target_input" : "energy"},
+            {"source_output" : "detector", "target_input" : "detector"},
+            {"source_output" : "geometry", "target_input" : "geometry"},
+        ],
+    }
+    
+
+
+    link_self = {"source" : "node_split", "target" : "node_split", "data_mapping" : [{"source_output" : "chunk_size", "target_input" : "chunk_size"},
+                                                                                      {"source_output" : "list_filenames", "target_input" : "list_filenames"},
+                                                                                      {"source_output" : "chunk_index", "target_input" : "chunk_index"},
+                                                                                           ],
+                                                                         "conditions" : [{"source_output": "repeat", "value": True}],
+                    }
+    
+
+
+    FILES = [str(item) for item in Path("/users/edgar1993a/work/ewoks_parallel/edf_data").glob("*.edf")]
+    OUTPUT_FILE = "/users/edgar1993a/work/ewoks_parallel/edf_dummy_out.h5"
+    PONI_FILE = "/users/edgar1993a/work/ewoks_parallel/fake_poni.poni"
+    graph = {
+        "graph" : {"id" : "integrate_edf_1"},
+        "nodes" : [node_split, node_pyfai_config, node_integrate, node_buffer],
+        "links" : [link_self, link_buffer_1, link_buffer_2, link_final],
+    }
+    convert_graph(graph, "edf_integration.json")
+    execute_graph(
+        graph=graph,
+        engine="ppf",
+        inputs=[
+            {"name" : "list_filenames", "value" : FILES, "id" : "node_split"},
+            {"name" : "filename", "value" : PONI_FILE, "id" : "node_pyfai_config"},
+        ],
+    )
 
 
 
@@ -414,4 +742,8 @@ class SplitH5(
 
 
 if __name__ == "__main__":
-    test_conditional_2()
+    st = time.perf_counter()
+    parallel_integration_edf_files()
+    print(f"Benchmark: {time.perf_counter() - st:.2f} s.")
+
+

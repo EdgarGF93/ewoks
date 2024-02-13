@@ -1,0 +1,88 @@
+{
+  "graph": {
+    "id": "edf"
+  },
+  "nodes": [
+    {
+      "id": "node_pyfai_config",
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.pyfaiconfig.PyFaiConfig",
+      "default_inputs": [
+        {
+          "name": "filename",
+          "value": "/users/edgar1993a/work/ewoks_parallel/fake_poni.poni"
+        }
+      ],
+      "uiProps": {
+        "position": {
+          "x": 12,
+          "y": 12
+        }
+      }
+    },
+    {
+      "id": "node_integration",
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.integrate.Integrate1D",
+      "default_inputs": [
+        {
+          "name": "image",
+          "value": "/users/edgar1993a/work/ewoks_parallel/edf_data/kk_0000.edf"
+        }
+      ],
+      "uiProps": {
+        "position": {
+          "x": 232,
+          "y": 12
+        }
+      }
+    },
+    {
+      "id": "node_save",
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.ascii.SaveResult1d",
+      "default_inputs": [
+        {
+          "name": "filename",
+          "value": "aaaaa.dat"
+        }
+      ],
+      "uiProps": {
+        "position": {
+          "x": 450,
+          "y": 15
+        }
+      }
+    }
+  ],
+  "links": [
+    {
+      "source": "node_pyfai_config",
+      "target": "node_integration",
+      "data_mapping": [
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        },
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        }
+      ]
+    },
+    {
+      "source": "node_integration",
+      "target": "node_save",
+      "data_mapping": [
+        {
+          "source_output": "result",
+          "target_input": "result"
+        }
+      ]
+    }
+  ]
+}

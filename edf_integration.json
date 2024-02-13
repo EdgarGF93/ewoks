@@ -1,0 +1,114 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {
+    "id": "integrate_edf_1",
+    "schema_version": "1.0"
+  },
+  "nodes": [
+    {
+      "task_type": "class",
+      "task_identifier": "tasks_parallel.SplitList",
+      "id": "node_split"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.pyfaiconfig.PyFaiConfig",
+      "id": "node_pyfai_config"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "tasks_parallel.DummyIntegrationList",
+      "id": "node_integrate"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "tasks_parallel.Buffer",
+      "id": "node_buffer"
+    }
+  ],
+  "links": [
+    {
+      "data_mapping": [
+        {
+          "source_output": "chunk_size",
+          "target_input": "chunk_size"
+        },
+        {
+          "source_output": "list_filenames",
+          "target_input": "list_filenames"
+        },
+        {
+          "source_output": "chunk_index",
+          "target_input": "chunk_index"
+        }
+      ],
+      "conditions": [
+        {
+          "source_output": "repeat",
+          "value": true
+        }
+      ],
+      "source": "node_split",
+      "target": "node_split"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "images",
+          "target_input": "images"
+        },
+        {
+          "source_output": "output_file",
+          "target_input": "output_file"
+        }
+      ],
+      "source": "node_split",
+      "target": "node_buffer"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        },
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        }
+      ],
+      "source": "node_pyfai_config",
+      "target": "node_buffer"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "images",
+          "target_input": "images"
+        },
+        {
+          "source_output": "output_file",
+          "target_input": "output_file"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        },
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        }
+      ],
+      "source": "node_buffer",
+      "target": "node_integrate"
+    }
+  ]
+}
