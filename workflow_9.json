@@ -1,0 +1,1162 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {
+    "id": "persistence_config",
+    "schema_version": "1.0"
+  },
+  "nodes": [
+    {
+      "task_type": "class",
+      "task_identifier": "persistence.ProxyOpenDataMask",
+      "id": "node_open_mask"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.pyfaiconfig.PyFaiConfig",
+      "id": "node_config"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "persistence.ProxyOpenData",
+      "default_inputs": [
+        {
+          "name": "edf_filename",
+          "value": "edf_data/kk_0090.edf"
+        }
+      ],
+      "id": "node_open_edf_data/kk_0090.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "persistence.ProxyPrint",
+      "id": "node_print_edf_data/kk_0090.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.integrate.Integrate1D",
+      "id": "node_integrate_edf_data/kk_0090.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.ascii.SaveAsciiPattern1D",
+      "id": "node_save_edf_data/kk_0090.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "persistence.ProxyOpenData",
+      "default_inputs": [
+        {
+          "name": "edf_filename",
+          "value": "edf_data/kk_0091.edf"
+        }
+      ],
+      "id": "node_open_edf_data/kk_0091.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "persistence.ProxyPrint",
+      "id": "node_print_edf_data/kk_0091.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.integrate.Integrate1D",
+      "id": "node_integrate_edf_data/kk_0091.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.ascii.SaveAsciiPattern1D",
+      "id": "node_save_edf_data/kk_0091.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "persistence.ProxyOpenData",
+      "default_inputs": [
+        {
+          "name": "edf_filename",
+          "value": "edf_data/kk_0092.edf"
+        }
+      ],
+      "id": "node_open_edf_data/kk_0092.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "persistence.ProxyPrint",
+      "id": "node_print_edf_data/kk_0092.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.integrate.Integrate1D",
+      "id": "node_integrate_edf_data/kk_0092.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.ascii.SaveAsciiPattern1D",
+      "id": "node_save_edf_data/kk_0092.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "persistence.ProxyOpenData",
+      "default_inputs": [
+        {
+          "name": "edf_filename",
+          "value": "edf_data/kk_0093.edf"
+        }
+      ],
+      "id": "node_open_edf_data/kk_0093.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "persistence.ProxyPrint",
+      "id": "node_print_edf_data/kk_0093.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.integrate.Integrate1D",
+      "id": "node_integrate_edf_data/kk_0093.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.ascii.SaveAsciiPattern1D",
+      "id": "node_save_edf_data/kk_0093.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "persistence.ProxyOpenData",
+      "default_inputs": [
+        {
+          "name": "edf_filename",
+          "value": "edf_data/kk_0094.edf"
+        }
+      ],
+      "id": "node_open_edf_data/kk_0094.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "persistence.ProxyPrint",
+      "id": "node_print_edf_data/kk_0094.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.integrate.Integrate1D",
+      "id": "node_integrate_edf_data/kk_0094.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.ascii.SaveAsciiPattern1D",
+      "id": "node_save_edf_data/kk_0094.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "persistence.ProxyOpenData",
+      "default_inputs": [
+        {
+          "name": "edf_filename",
+          "value": "edf_data/kk_0095.edf"
+        }
+      ],
+      "id": "node_open_edf_data/kk_0095.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "persistence.ProxyPrint",
+      "id": "node_print_edf_data/kk_0095.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.integrate.Integrate1D",
+      "id": "node_integrate_edf_data/kk_0095.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.ascii.SaveAsciiPattern1D",
+      "id": "node_save_edf_data/kk_0095.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "persistence.ProxyOpenData",
+      "default_inputs": [
+        {
+          "name": "edf_filename",
+          "value": "edf_data/kk_0096.edf"
+        }
+      ],
+      "id": "node_open_edf_data/kk_0096.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "persistence.ProxyPrint",
+      "id": "node_print_edf_data/kk_0096.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.integrate.Integrate1D",
+      "id": "node_integrate_edf_data/kk_0096.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.ascii.SaveAsciiPattern1D",
+      "id": "node_save_edf_data/kk_0096.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "persistence.ProxyOpenData",
+      "default_inputs": [
+        {
+          "name": "edf_filename",
+          "value": "edf_data/kk_0097.edf"
+        }
+      ],
+      "id": "node_open_edf_data/kk_0097.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "persistence.ProxyPrint",
+      "id": "node_print_edf_data/kk_0097.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.integrate.Integrate1D",
+      "id": "node_integrate_edf_data/kk_0097.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.ascii.SaveAsciiPattern1D",
+      "id": "node_save_edf_data/kk_0097.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "persistence.ProxyOpenData",
+      "default_inputs": [
+        {
+          "name": "edf_filename",
+          "value": "edf_data/kk_0098.edf"
+        }
+      ],
+      "id": "node_open_edf_data/kk_0098.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "persistence.ProxyPrint",
+      "id": "node_print_edf_data/kk_0098.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.integrate.Integrate1D",
+      "id": "node_integrate_edf_data/kk_0098.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.ascii.SaveAsciiPattern1D",
+      "id": "node_save_edf_data/kk_0098.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "persistence.ProxyOpenData",
+      "default_inputs": [
+        {
+          "name": "edf_filename",
+          "value": "edf_data/kk_0099.edf"
+        }
+      ],
+      "id": "node_open_edf_data/kk_0099.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "persistence.ProxyPrint",
+      "id": "node_print_edf_data/kk_0099.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.integrate.Integrate1D",
+      "id": "node_integrate_edf_data/kk_0099.edf"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.ascii.SaveAsciiPattern1D",
+      "id": "node_save_edf_data/kk_0099.edf"
+    }
+  ],
+  "links": [
+    {
+      "data_mapping": [
+        {
+          "source_output": "image",
+          "target_input": "mask"
+        }
+      ],
+      "source": "node_open_mask",
+      "target": "node_integrate_edf_data/kk_0090.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "image",
+          "target_input": "mask"
+        }
+      ],
+      "source": "node_open_mask",
+      "target": "node_integrate_edf_data/kk_0091.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "image",
+          "target_input": "mask"
+        }
+      ],
+      "source": "node_open_mask",
+      "target": "node_integrate_edf_data/kk_0092.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "image",
+          "target_input": "mask"
+        }
+      ],
+      "source": "node_open_mask",
+      "target": "node_integrate_edf_data/kk_0093.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "image",
+          "target_input": "mask"
+        }
+      ],
+      "source": "node_open_mask",
+      "target": "node_integrate_edf_data/kk_0094.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "image",
+          "target_input": "mask"
+        }
+      ],
+      "source": "node_open_mask",
+      "target": "node_integrate_edf_data/kk_0095.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "image",
+          "target_input": "mask"
+        }
+      ],
+      "source": "node_open_mask",
+      "target": "node_integrate_edf_data/kk_0096.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "image",
+          "target_input": "mask"
+        }
+      ],
+      "source": "node_open_mask",
+      "target": "node_integrate_edf_data/kk_0097.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "image",
+          "target_input": "mask"
+        }
+      ],
+      "source": "node_open_mask",
+      "target": "node_integrate_edf_data/kk_0098.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "image",
+          "target_input": "mask"
+        }
+      ],
+      "source": "node_open_mask",
+      "target": "node_integrate_edf_data/kk_0099.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        }
+      ],
+      "source": "node_config",
+      "target": "node_print_edf_data/kk_0090.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        }
+      ],
+      "source": "node_config",
+      "target": "node_print_edf_data/kk_0091.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        }
+      ],
+      "source": "node_config",
+      "target": "node_print_edf_data/kk_0092.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        }
+      ],
+      "source": "node_config",
+      "target": "node_print_edf_data/kk_0093.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        }
+      ],
+      "source": "node_config",
+      "target": "node_print_edf_data/kk_0094.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        }
+      ],
+      "source": "node_config",
+      "target": "node_print_edf_data/kk_0095.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        }
+      ],
+      "source": "node_config",
+      "target": "node_print_edf_data/kk_0096.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        }
+      ],
+      "source": "node_config",
+      "target": "node_print_edf_data/kk_0097.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        }
+      ],
+      "source": "node_config",
+      "target": "node_print_edf_data/kk_0098.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        }
+      ],
+      "source": "node_config",
+      "target": "node_print_edf_data/kk_0099.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "image",
+          "target_input": "image"
+        }
+      ],
+      "source": "node_open_edf_data/kk_0090.edf",
+      "target": "node_print_edf_data/kk_0090.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "filename_out",
+          "target_input": "filename"
+        }
+      ],
+      "source": "node_open_edf_data/kk_0090.edf",
+      "target": "node_save_edf_data/kk_0090.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        },
+        {
+          "source_output": "image",
+          "target_input": "image"
+        }
+      ],
+      "source": "node_print_edf_data/kk_0090.edf",
+      "target": "node_integrate_edf_data/kk_0090.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "x",
+          "target_input": "x"
+        },
+        {
+          "source_output": "y",
+          "target_input": "y"
+        },
+        {
+          "source_output": "xunits",
+          "target_input": "xunits"
+        }
+      ],
+      "source": "node_integrate_edf_data/kk_0090.edf",
+      "target": "node_save_edf_data/kk_0090.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "image",
+          "target_input": "image"
+        }
+      ],
+      "source": "node_open_edf_data/kk_0091.edf",
+      "target": "node_print_edf_data/kk_0091.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "filename_out",
+          "target_input": "filename"
+        }
+      ],
+      "source": "node_open_edf_data/kk_0091.edf",
+      "target": "node_save_edf_data/kk_0091.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        },
+        {
+          "source_output": "image",
+          "target_input": "image"
+        }
+      ],
+      "source": "node_print_edf_data/kk_0091.edf",
+      "target": "node_integrate_edf_data/kk_0091.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "x",
+          "target_input": "x"
+        },
+        {
+          "source_output": "y",
+          "target_input": "y"
+        },
+        {
+          "source_output": "xunits",
+          "target_input": "xunits"
+        }
+      ],
+      "source": "node_integrate_edf_data/kk_0091.edf",
+      "target": "node_save_edf_data/kk_0091.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "image",
+          "target_input": "image"
+        }
+      ],
+      "source": "node_open_edf_data/kk_0092.edf",
+      "target": "node_print_edf_data/kk_0092.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "filename_out",
+          "target_input": "filename"
+        }
+      ],
+      "source": "node_open_edf_data/kk_0092.edf",
+      "target": "node_save_edf_data/kk_0092.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        },
+        {
+          "source_output": "image",
+          "target_input": "image"
+        }
+      ],
+      "source": "node_print_edf_data/kk_0092.edf",
+      "target": "node_integrate_edf_data/kk_0092.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "x",
+          "target_input": "x"
+        },
+        {
+          "source_output": "y",
+          "target_input": "y"
+        },
+        {
+          "source_output": "xunits",
+          "target_input": "xunits"
+        }
+      ],
+      "source": "node_integrate_edf_data/kk_0092.edf",
+      "target": "node_save_edf_data/kk_0092.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "image",
+          "target_input": "image"
+        }
+      ],
+      "source": "node_open_edf_data/kk_0093.edf",
+      "target": "node_print_edf_data/kk_0093.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "filename_out",
+          "target_input": "filename"
+        }
+      ],
+      "source": "node_open_edf_data/kk_0093.edf",
+      "target": "node_save_edf_data/kk_0093.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        },
+        {
+          "source_output": "image",
+          "target_input": "image"
+        }
+      ],
+      "source": "node_print_edf_data/kk_0093.edf",
+      "target": "node_integrate_edf_data/kk_0093.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "x",
+          "target_input": "x"
+        },
+        {
+          "source_output": "y",
+          "target_input": "y"
+        },
+        {
+          "source_output": "xunits",
+          "target_input": "xunits"
+        }
+      ],
+      "source": "node_integrate_edf_data/kk_0093.edf",
+      "target": "node_save_edf_data/kk_0093.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "image",
+          "target_input": "image"
+        }
+      ],
+      "source": "node_open_edf_data/kk_0094.edf",
+      "target": "node_print_edf_data/kk_0094.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "filename_out",
+          "target_input": "filename"
+        }
+      ],
+      "source": "node_open_edf_data/kk_0094.edf",
+      "target": "node_save_edf_data/kk_0094.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        },
+        {
+          "source_output": "image",
+          "target_input": "image"
+        }
+      ],
+      "source": "node_print_edf_data/kk_0094.edf",
+      "target": "node_integrate_edf_data/kk_0094.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "x",
+          "target_input": "x"
+        },
+        {
+          "source_output": "y",
+          "target_input": "y"
+        },
+        {
+          "source_output": "xunits",
+          "target_input": "xunits"
+        }
+      ],
+      "source": "node_integrate_edf_data/kk_0094.edf",
+      "target": "node_save_edf_data/kk_0094.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "image",
+          "target_input": "image"
+        }
+      ],
+      "source": "node_open_edf_data/kk_0095.edf",
+      "target": "node_print_edf_data/kk_0095.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "filename_out",
+          "target_input": "filename"
+        }
+      ],
+      "source": "node_open_edf_data/kk_0095.edf",
+      "target": "node_save_edf_data/kk_0095.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        },
+        {
+          "source_output": "image",
+          "target_input": "image"
+        }
+      ],
+      "source": "node_print_edf_data/kk_0095.edf",
+      "target": "node_integrate_edf_data/kk_0095.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "x",
+          "target_input": "x"
+        },
+        {
+          "source_output": "y",
+          "target_input": "y"
+        },
+        {
+          "source_output": "xunits",
+          "target_input": "xunits"
+        }
+      ],
+      "source": "node_integrate_edf_data/kk_0095.edf",
+      "target": "node_save_edf_data/kk_0095.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "image",
+          "target_input": "image"
+        }
+      ],
+      "source": "node_open_edf_data/kk_0096.edf",
+      "target": "node_print_edf_data/kk_0096.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "filename_out",
+          "target_input": "filename"
+        }
+      ],
+      "source": "node_open_edf_data/kk_0096.edf",
+      "target": "node_save_edf_data/kk_0096.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        },
+        {
+          "source_output": "image",
+          "target_input": "image"
+        }
+      ],
+      "source": "node_print_edf_data/kk_0096.edf",
+      "target": "node_integrate_edf_data/kk_0096.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "x",
+          "target_input": "x"
+        },
+        {
+          "source_output": "y",
+          "target_input": "y"
+        },
+        {
+          "source_output": "xunits",
+          "target_input": "xunits"
+        }
+      ],
+      "source": "node_integrate_edf_data/kk_0096.edf",
+      "target": "node_save_edf_data/kk_0096.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "image",
+          "target_input": "image"
+        }
+      ],
+      "source": "node_open_edf_data/kk_0097.edf",
+      "target": "node_print_edf_data/kk_0097.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "filename_out",
+          "target_input": "filename"
+        }
+      ],
+      "source": "node_open_edf_data/kk_0097.edf",
+      "target": "node_save_edf_data/kk_0097.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        },
+        {
+          "source_output": "image",
+          "target_input": "image"
+        }
+      ],
+      "source": "node_print_edf_data/kk_0097.edf",
+      "target": "node_integrate_edf_data/kk_0097.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "x",
+          "target_input": "x"
+        },
+        {
+          "source_output": "y",
+          "target_input": "y"
+        },
+        {
+          "source_output": "xunits",
+          "target_input": "xunits"
+        }
+      ],
+      "source": "node_integrate_edf_data/kk_0097.edf",
+      "target": "node_save_edf_data/kk_0097.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "image",
+          "target_input": "image"
+        }
+      ],
+      "source": "node_open_edf_data/kk_0098.edf",
+      "target": "node_print_edf_data/kk_0098.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "filename_out",
+          "target_input": "filename"
+        }
+      ],
+      "source": "node_open_edf_data/kk_0098.edf",
+      "target": "node_save_edf_data/kk_0098.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        },
+        {
+          "source_output": "image",
+          "target_input": "image"
+        }
+      ],
+      "source": "node_print_edf_data/kk_0098.edf",
+      "target": "node_integrate_edf_data/kk_0098.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "x",
+          "target_input": "x"
+        },
+        {
+          "source_output": "y",
+          "target_input": "y"
+        },
+        {
+          "source_output": "xunits",
+          "target_input": "xunits"
+        }
+      ],
+      "source": "node_integrate_edf_data/kk_0098.edf",
+      "target": "node_save_edf_data/kk_0098.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "image",
+          "target_input": "image"
+        }
+      ],
+      "source": "node_open_edf_data/kk_0099.edf",
+      "target": "node_print_edf_data/kk_0099.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "filename_out",
+          "target_input": "filename"
+        }
+      ],
+      "source": "node_open_edf_data/kk_0099.edf",
+      "target": "node_save_edf_data/kk_0099.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        },
+        {
+          "source_output": "image",
+          "target_input": "image"
+        }
+      ],
+      "source": "node_print_edf_data/kk_0099.edf",
+      "target": "node_integrate_edf_data/kk_0099.edf"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "x",
+          "target_input": "x"
+        },
+        {
+          "source_output": "y",
+          "target_input": "y"
+        },
+        {
+          "source_output": "xunits",
+          "target_input": "xunits"
+        }
+      ],
+      "source": "node_integrate_edf_data/kk_0099.edf",
+      "target": "node_save_edf_data/kk_0099.edf"
+    }
+  ]
+}

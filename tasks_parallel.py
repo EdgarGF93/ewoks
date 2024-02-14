@@ -636,7 +636,7 @@ class SplitList(
 class Buffer(
     Task,
     optional_input_names=["detector", "energy", "geometry", "images", "output_file"],
-    output_names = ["detector", "energy", "geometry", "images", "output_file"],
+    output_names = ["detector", "energy", "geometry", "images", "output_file", "_continue"],
 ):
     def run(self):
         self.outputs.detector = self.get_input_value(key="detector", default=None)
@@ -644,7 +644,10 @@ class Buffer(
         self.outputs.geometry = self.get_input_value(key="geometry", default=None)
         self.outputs.images = self.get_input_value(key="images", default=None)
         self.outputs.output_file = self.get_input_value(key="output_file", default=None)
-    
+        if self.outputs.detector and self.outputs.energy and self.outputs.geometry and self.outputs.images and self.outputs.output_file:
+            self.outputs._continue = True
+        else:
+            self.outputs._continue = False
 
 class DummyIntegrationList(
     Task,
@@ -660,17 +663,11 @@ class DummyIntegrationList(
 
 def parallel_integration_edf_files():
     node_pyfai_config = {"id" : "node_pyfai_config", "task_type" : "class", "task_identifier" : "ewoksxrpd.tasks.pyfaiconfig.PyFaiConfig"}
-    # node_integrate = {"id" : "node_integration", "task_type" : "class", "task_identifier" : "ewoksxrpd.tasks.integrate.Integrate1DList"}
-    node_integrate = {"id" : "node_integrate", "task_type" : "class", "task_identifier" : "tasks_parallel.DummyIntegrationList"}
     node_split = {"id" : "node_split", "task_type" : "class", "task_identifier" : "tasks_parallel.SplitList"}
-    node_buffer = {"id" : "node_buffer", "task_type" : "class", "task_identifier" : "tasks_parallel.Buffer"}
+    node_buffer = {"id" : "node_buffer", "task_type" : "class", "task_identifier" : "tasks_parallel.Buffer"}    
+    node_integrate = {"id" : "node_integrate", "task_type" : "class", "task_identifier" : "tasks_parallel.Integrate1DList"}
 
-    # link_config = {"source" : "node_pyfai_config", "target" : "node_integrate", "data_mapping" : [{"source_output" : "energy", "target_input" : "energy"},
-    #                                                                                                 {"source_output" : "detector", "target_input" : "detector"},
-    #                                                                                                 {"source_output" : "geometry", "target_input" : "geometry"},
-    #                                                                               ]}
-    
-    link_buffer_1 = {
+    link_split = {
         "source" : "node_split", 
         "target" : "node_buffer", 
         "data_mapping" : [
@@ -679,7 +676,17 @@ def parallel_integration_edf_files():
         ],
     }
 
-    link_buffer_2 = {
+    link_self = {
+        "source" : "node_split", 
+        "target" : "node_split", 
+        "data_mapping" : [{"source_output" : "chunk_size", "target_input" : "chunk_size"},
+                          {"source_output" : "list_filenames", "target_input" : "list_filenames"},
+                          {"source_output" : "chunk_index", "target_input" : "chunk_index"},
+                          ],
+        "conditions" : [{"source_output": "repeat", "value": True}],
+    }
+
+    link_config = {
         "source" : "node_pyfai_config", 
         "target" : "node_buffer", 
         "data_mapping" : [
@@ -688,9 +695,8 @@ def parallel_integration_edf_files():
             {"source_output" : "geometry", "target_input" : "geometry"},
         ],
     }
-
     
-    link_final = {
+    link_integration = {
         "source" : "node_buffer", 
         "target" : "node_integrate", 
         "data_mapping" : [
@@ -700,18 +706,8 @@ def parallel_integration_edf_files():
             {"source_output" : "detector", "target_input" : "detector"},
             {"source_output" : "geometry", "target_input" : "geometry"},
         ],
+        "conditions" : [{"source_output": "_continue", "value": True}],
     }
-    
-
-
-    link_self = {"source" : "node_split", "target" : "node_split", "data_mapping" : [{"source_output" : "chunk_size", "target_input" : "chunk_size"},
-                                                                                      {"source_output" : "list_filenames", "target_input" : "list_filenames"},
-                                                                                      {"source_output" : "chunk_index", "target_input" : "chunk_index"},
-                                                                                           ],
-                                                                         "conditions" : [{"source_output": "repeat", "value": True}],
-                    }
-    
-
 
     FILES = [str(item) for item in Path("/users/edgar1993a/work/ewoks_parallel/edf_data").glob("*.edf")]
     OUTPUT_FILE = "/users/edgar1993a/work/ewoks_parallel/edf_dummy_out.h5"
@@ -719,7 +715,7 @@ def parallel_integration_edf_files():
     graph = {
         "graph" : {"id" : "integrate_edf_1"},
         "nodes" : [node_split, node_pyfai_config, node_integrate, node_buffer],
-        "links" : [link_self, link_buffer_1, link_buffer_2, link_final],
+        "links" : [link_self, link_split, link_config, link_integration],
     }
     convert_graph(graph, "edf_integration.json")
     execute_graph(
@@ -732,8 +728,61 @@ def parallel_integration_edf_files():
     )
 
 
+class Proxy(
+    Task,
+    input_names=["images"],
+    output_names=["images", "output_file"],
+):
+    def run(self):
+        self.outputs.images = self.inputs.images
+        self.outputs.output_file = self.inputs.output_file
 
 
+
+def integrate_h5():
+    node_pyfai_config = {"id" : "node_pyfai_config", "task_type" : "class", "task_identifier" : "ewoksxrpd.tasks.pyfaiconfig.PyFaiConfig"}
+    node_proxy = {"id" : "node_proxy", "task_type" : "class", "task_identifier" : "tasks_parallel.Proxy"}
+    node_integrate = {"id" : "node_integrate", "task_type" : "class", "task_identifier" : "ewoksxrpd.tasks.integrate.Integrate1DList"}
+
+    link_proxy = {
+        "source" : "node_proxy", 
+        "target" : "node_integrate", 
+        "data_mapping" : [
+            {"source_output" : "images", "target_input" : "images"},
+            {"source_output" : "output_file", "target_input" : "output_file"},
+        ],
+    }
+
+    link_config = {
+        "source" : "node_pyfai_config", 
+        "target" : "node_integrate", 
+        "data_mapping" : [
+            {"source_output" : "energy", "target_input" : "energy"},
+            {"source_output" : "detector", "target_input" : "detector"},
+            {"source_output" : "geometry", "target_input" : "geometry"},
+        ],
+    }
+
+    INPUT_H5 = "/users/edgar1993a/work/ewoks_parallel/Eiger2_CeO2_75keV.h5"
+    OUTPUT_H5 = "/users/edgar1993a/work/ewoks_parallel/Eiger2_CeO2_75keV_out.h5"
+    PONI_FILE = "/users/edgar1993a/work/ewoks_parallel/eiger.poni"
+
+    graph = {
+        "graph" : {"id" : "integrate_h5"},
+        "nodes" : [node_proxy, node_pyfai_config, node_integrate],
+        "links" : [link_proxy, link_config],
+    }
+
+    convert_graph(graph, "integrate_h5.json")
+    execute_graph(
+        graph=graph,
+        engine="dask",
+        inputs=[
+            {"name" : "images", "value" : INPUT_H5, "id" : "node_proxy"},
+            {"name" : "output_file", "value" : OUTPUT_H5, "id" : "node_proxy"},
+            {"name" : "filename", "value" : PONI_FILE, "id" : "node_pyfai_config"},
+        ],
+    )
 
 
 
@@ -743,7 +792,7 @@ def parallel_integration_edf_files():
 
 if __name__ == "__main__":
     st = time.perf_counter()
-    parallel_integration_edf_files()
+    integrate_h5()
     print(f"Benchmark: {time.perf_counter() - st:.2f} s.")
 
 

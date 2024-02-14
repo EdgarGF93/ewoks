@@ -18,7 +18,7 @@
     },
     {
       "task_type": "class",
-      "task_identifier": "tasks_parallel.DummyIntegrationList",
+      "task_identifier": "tasks_parallel.Integrate1DList",
       "id": "node_integrate"
     },
     {
@@ -105,6 +105,12 @@
         {
           "source_output": "geometry",
           "target_input": "geometry"
+        }
+      ],
+      "conditions": [
+        {
+          "source_output": "_continue",
+          "value": true
         }
       ],
       "source": "node_buffer",
