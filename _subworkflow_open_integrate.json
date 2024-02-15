@@ -1,0 +1,40 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {
+    "id": "subgraph",
+    "schema_version": "1.0"
+  },
+  "nodes": [
+    {
+      "task_type": "class",
+      "task_identifier": "int_subworkflows.OpenData",
+      "id": "node_open"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "int_subworkflows.IntegrateAndSave",
+      "id": "node_integrate"
+    }
+  ],
+  "links": [
+    {
+      "data_mapping": [
+        {
+          "source_output": "ai",
+          "target_input": "ai"
+        },
+        {
+          "source_output": "data",
+          "target_input": "data"
+        },
+        {
+          "source_output": "filename_out",
+          "target_input": "filename_out"
+        }
+      ],
+      "source": "node_open",
+      "target": "node_integrate"
+    }
+  ]
+}

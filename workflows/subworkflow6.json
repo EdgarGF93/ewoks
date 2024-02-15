@@ -1,0 +1,53 @@
+{
+  "graph": {
+    "id": "subworkflow6"
+  },
+  "nodes": [
+    {
+      "id": "node_poni",
+      "task_type": "class",
+      "task_identifier": "complete_workflow.ProxyPoni",
+      "default_inputs": [
+        {
+          "name": "poni",
+          "value": "lab6.poni"
+        }
+      ],
+      "uiProps": {
+        "position": {
+          "x": 12,
+          "y": 12
+        }
+      }
+    },
+    {
+      "id": "node_0000",
+      "task_type": "class",
+      "task_identifier": "complete_workflow.ExecuteSubWorkflowDask",
+      "default_inputs": [
+        {
+          "name": "filename",
+          "value": "edf_data/kk_0000.edf"
+        }
+      ],
+      "uiProps": {
+        "position": {
+          "x": 225,
+          "y": 15
+        }
+      }
+    }
+  ],
+  "links": [
+    {
+      "source": "node_poni",
+      "target": "node_0000",
+      "data_mapping": [
+        {
+          "source_output": "poni",
+          "target_input": "poni"
+        }
+      ]
+    }
+  ]
+}

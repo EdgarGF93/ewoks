@@ -1,0 +1,44 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {
+    "id": "subgraph",
+    "schema_version": "1.0"
+  },
+  "nodes": [
+    {
+      "task_type": "class",
+      "task_identifier": "workflow_final.OpenAI",
+      "id": "node_openai"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "workflow_final.OpenIntegrateSave",
+      "id": "node_openintegratesave"
+    }
+  ],
+  "links": [
+    {
+      "data_mapping": [
+        {
+          "source_output": "ai",
+          "target_input": "ai"
+        },
+        {
+          "source_output": "filename_list",
+          "target_input": "filename_list"
+        },
+        {
+          "source_output": "npt",
+          "target_input": "npt"
+        },
+        {
+          "source_output": "method",
+          "target_input": "method"
+        }
+      ],
+      "source": "node_openai",
+      "target": "node_openintegratesave"
+    }
+  ]
+}

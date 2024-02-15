@@ -1,0 +1,176 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {
+    "id": "self_calling_1",
+    "schema_version": "1.0"
+  },
+  "nodes": [
+    {
+      "task_type": "class",
+      "task_identifier": "selfcalling.ProxyOpenManyData2",
+      "id": "node_open"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "selfcalling.ProxyOpenDataMask",
+      "id": "node_open_mask"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.pyfaiconfig.PyFaiConfig",
+      "id": "node_config"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "selfcalling.ProxyPrint2",
+      "id": "node_print"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.integrate.Integrate1D",
+      "id": "node_integrate"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "ewoksxrpd.tasks.ascii.SaveAsciiPattern1D",
+      "id": "node_save"
+    }
+  ],
+  "links": [
+    {
+      "data_mapping": [
+        {
+          "source_output": "image",
+          "target_input": "image"
+        },
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        },
+        {
+          "source_output": "mask",
+          "target_input": "mask"
+        }
+      ],
+      "source": "node_open",
+      "target": "node_print"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "list_filenames",
+          "target_input": "list_filenames"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        },
+        {
+          "source_output": "mask",
+          "target_input": "mask"
+        },
+        {
+          "source_output": "index",
+          "target_input": "index"
+        }
+      ],
+      "conditions": [
+        {
+          "source_output": "repeat",
+          "value": true
+        }
+      ],
+      "source": "node_open",
+      "target": "node_open"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "image",
+          "target_input": "mask"
+        }
+      ],
+      "source": "node_open_mask",
+      "target": "node_open"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        }
+      ],
+      "source": "node_config",
+      "target": "node_open"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "geometry",
+          "target_input": "geometry"
+        },
+        {
+          "source_output": "energy",
+          "target_input": "energy"
+        },
+        {
+          "source_output": "detector",
+          "target_input": "detector"
+        },
+        {
+          "source_output": "mask",
+          "target_input": "mask"
+        },
+        {
+          "source_output": "image",
+          "target_input": "image"
+        }
+      ],
+      "source": "node_print",
+      "target": "node_integrate"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "x",
+          "target_input": "x"
+        },
+        {
+          "source_output": "y",
+          "target_input": "y"
+        },
+        {
+          "source_output": "xunits",
+          "target_input": "xunits"
+        }
+      ],
+      "source": "node_integrate",
+      "target": "node_save"
+    }
+  ]
+}

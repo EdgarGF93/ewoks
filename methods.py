@@ -101,8 +101,5 @@ def generate_chunks_edf_integration(filename_list, mask_file, poni_file, chunk_s
         execute_graph(
             graph=graph,
             engine=engine,
-            inputs=[
-                {"name" : "edf_filename", "value" : mask_file, "id" : "node_open_mask"},
-                {"name" : "filename", "value" : poni_file, "id" : "node_config"},
-            ],
+ 
         )

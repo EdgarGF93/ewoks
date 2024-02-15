@@ -1,0 +1,41 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {
+    "id": "subgraph",
+    "schema_version": "1.0"
+  },
+  "nodes": [
+    {
+      "task_type": "class",
+      "task_identifier": "complete_workflow_list.OpenIntegrateAndSave",
+      "id": "node_open_integrate"
+    }
+  ],
+  "links": [
+    {
+      "data_mapping": [
+        {
+          "source_output": "filename_list",
+          "target_input": "filename_list"
+        },
+        {
+          "source_output": "ai",
+          "target_input": "ai"
+        },
+        {
+          "source_output": "index",
+          "target_input": "index"
+        }
+      ],
+      "conditions": [
+        {
+          "source_output": "repeat",
+          "value": true
+        }
+      ],
+      "source": "node_open_integrate",
+      "target": "node_open_integrate"
+    }
+  ]
+}
