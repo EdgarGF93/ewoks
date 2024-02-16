@@ -1,4 +1,0 @@
-#!/bin/bash
-export SLURM_USER=edgar1993a
-export SLURM_URL=http://slurm-api.esrf.fr:6820
-export SLURM_TOKEN=SLURM_JWT=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDgxNTg0MzksImlhdCI6MTcwODA3MjAzOSwic3VuIjoiZWRnYXIxOTkzYSJ9.-N-CYsyeybGifEiymJDudFDQDjdZPQFo9K6_qmnyXWU
