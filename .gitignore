@@ -1,6 +1,7 @@
 *.h5
 *.pyc
-*.edf
 *.dat
 *.txt
 *.sh
+**kk**
+rayonix*
