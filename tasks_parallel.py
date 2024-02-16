@@ -88,7 +88,7 @@ class ExecuteDask(
 ):
     def run(self):
         execute_graph(
-            graph="subworkflow_parallel.json",
+            graph="workflows/subworkflow_parallel.json",
             engine="dask",
             inputs=[
                 {"name" : "poni", "value" : self.inputs.poni, "id" : "node_openai"},
@@ -184,7 +184,7 @@ def generate_global_workflow():
 
 def execute_ewoks_parallel(list_files, poni_file, chunk_size, npt, method):
     execute_graph(
-        graph="global_workflow_parallel.json",
+        graph="workflows/global_workflow_parallel.json",
         engine="ppf",
         inputs=[
             {"name" : "poni", "value" : poni_file, "id" : "node_split"},
