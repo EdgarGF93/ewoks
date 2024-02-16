@@ -52,10 +52,10 @@ class OpenIntegrateSave(
                filename = str(filename)
                data = fabio.open(filename).data
                filename_out = filename.replace(".edf", "_1d.dat")
-               from pyFAI.azimuthalIntegrator import AzimuthalIntegrator
-               ll = IntegrationMethod.select_method(dim=1, algo="csr", split="bbox")
-               with open("methods.txt", "w") as f:
-                   f.write(str(ll))
+            #    from pyFAI.azimuthalIntegrator import AzimuthalIntegrator
+            #    ll = IntegrationMethod.select_method(dim=1, algo="csr", split="bbox")
+            #    with open("methods.txt", "w") as f:
+            #        f.write(str(ll))
 
                res1d = self.inputs.ai.integrate1d(
                     data=data,
@@ -337,7 +337,7 @@ class ExecuteSubWorkflowSLURM(
                 # "set" : False,
                 # "infinite" : True,
                 # },
-                # "gpus_per_node"
+                # "gpus_per_node" : 1,
                 # "current_working_directory": "/other/path/to/data",
             },
             # "pre_script": "module load myotherenv",
@@ -396,8 +396,8 @@ if __name__ == "__main__":
     PONI = "data/lab6.poni"
     NPT = 2000
     METHOD = ("bbox", "csr", "cython")
-    NFILES = 20
-    CHUNK_SIZE = 5
+    NFILES = 1000
+    CHUNK_SIZE = 62
 
     st = time.perf_counter()
     generate_god_workflow(
