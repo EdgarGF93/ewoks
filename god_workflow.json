@@ -8,7 +8,7 @@
   "nodes": [
     {
       "task_type": "class",
-      "task_identifier": "tasks_slurm.ExecuteGlobalWorkflow",
+      "task_identifier": "tasks_slurm_alternative.ExecuteGlobalWorkflow",
       "default_inputs": [
         {
           "name": "path_to_find",
@@ -17,6 +17,14 @@
         {
           "name": "pattern",
           "value": "*.edf"
+        },
+        {
+          "name": "nfiles",
+          "value": 1000
+        },
+        {
+          "name": "chunk_size",
+          "value": 5
         },
         {
           "name": "poni",
@@ -31,12 +39,12 @@
           "value": [
             "bbox",
             "csr",
-            "cython"
+            "opencl"
           ]
         },
         {
-          "name": "chunk_size",
-          "value": 50
+          "name": "slurm",
+          "value": true
         }
       ],
       "id": "node_god"

@@ -331,7 +331,7 @@ class ExecuteSubWorkflowSLURM(
             "pre_script": "module load ewoks",
             "parameters": {
                 "time_limit": 360,
-                # "minimum_cpus_per_node" : 4,
+                "minimum_cpus_per_node" : 14,
                 # "max_cpus" : {
                 # "number" : 5,
                 # "set" : False,
@@ -396,8 +396,8 @@ if __name__ == "__main__":
     PONI = "data/lab6.poni"
     NPT = 2000
     METHOD = ("bbox", "csr", "cython")
-    NFILES = 1000
-    CHUNK_SIZE = 62
+    NFILES = 20
+    CHUNK_SIZE = 1
 
     st = time.perf_counter()
     generate_god_workflow(
@@ -422,3 +422,11 @@ if __name__ == "__main__":
     #     npt=NPT,
     #     method=METHOD,
     # )
+    # x = np.array([20, 35, 65, 100, 150])
+    # y = np.array([46, 34, 18.8, 28, 33.23])
+    # plt.plot(x, y, marker='o', ls='--')
+    # plt.xlabel("Chunk size")
+    # plt.ylabel(f"Time to integrate 1000 frames")
+    # plt.title("bbox_csr_cython")
+    # plt.savefig(f"benchmark_chunks_bbox_csr_cython_1000_SLURM.png")
+    # plt.close()
