@@ -20,10 +20,7 @@ class ExecuteDaskSLURM(
         )
 
 def activate_slurm_environment():
-    os.system("export SLURM_USER=edgar1993a")
-    os.system("export SLURM_URL=http://slurm-api.esrf.fr:6820")
-    os.system("export SLURM_TOKEN=SLURM_JWT=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDgxNTg0MzksImlhdCI6MTcwODA3MjAzOSwic3VuIjoiZWRnYXIxOTkzYSJ9.-N-CYsyeybGifEiymJDudFDQDjdZPQFo9K6_qmnyXWU")
-
+    os.system("source activate_slurm_env.sh")
 
 if __name__ == "__main__":
     activate_slurm_environment()
