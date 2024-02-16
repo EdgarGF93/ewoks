@@ -53,7 +53,7 @@ class OpenIntegrateSave(
                data = fabio.open(filename).data
                filename_out = filename.replace(".edf", "_1d.dat")
                from pyFAI.azimuthalIntegrator import AzimuthalIntegrator
-               ll = IntegrationMethod.list_available()
+               ll = IntegrationMethod.select_method(dim=1, algo="csr", split="bbox")
                with open("methods.txt", "w") as f:
                    f.write(str(ll))
 
@@ -328,6 +328,7 @@ class ExecuteSubWorkflowSLURM(
 
         kwargs = {}
         kwargs["_slurm_spawn_arguments"] = {
+            "pre_script": "module load ewoks",
             "parameters": {
                 "time_limit": 360,
                 # "minimum_cpus_per_node" : 4,
