@@ -52,11 +52,11 @@ class OpenIntegrateSave(
                filename = str(filename)
                data = fabio.open(filename).data
                filename_out = filename.replace(".edf", "_1d.dat")
-               from pyFAI.azimuthalIntegrator import AzimuthalIntegrator
-               ll = IntegrationMethod.list_available()
-               print(ll)
-               with open("methods.txt", "w") as f:
-                   f.write(ll)
+            #    from pyFAI.azimuthalIntegrator import AzimuthalIntegrator
+            #    ll = IntegrationMethod.list_available()
+            #    print(ll)
+            #    with open("methods.txt", "w") as f:
+            #        f.write(ll)
 
                res1d = self.inputs.ai.integrate1d(
                     data=data,
@@ -396,8 +396,8 @@ if __name__ == "__main__":
     PONI = "data/lab6.poni"
     NPT = 2000
     METHOD = ("bbox", "csr", "cython")
-    NFILES = 1
-    CHUNK_SIZE = 1
+    NFILES = 20
+    CHUNK_SIZE = 5
 
     st = time.perf_counter()
     generate_god_workflow(
