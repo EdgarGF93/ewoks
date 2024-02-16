@@ -52,11 +52,10 @@ class OpenIntegrateSave(
                filename = str(filename)
                data = fabio.open(filename).data
                filename_out = filename.replace(".edf", "_1d.dat")
-            #    from pyFAI.azimuthalIntegrator import AzimuthalIntegrator
-            #    ll = IntegrationMethod.list_available()
-            #    print(ll)
-            #    with open("methods.txt", "w") as f:
-            #        f.write(ll)
+               from pyFAI.azimuthalIntegrator import AzimuthalIntegrator
+               ll = IntegrationMethod.list_available()
+               with open("methods.txt", "w") as f:
+                   f.write(str(ll))
 
                res1d = self.inputs.ai.integrate1d(
                     data=data,
