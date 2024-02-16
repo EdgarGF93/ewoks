@@ -58,12 +58,12 @@ class OpenIntegrateSave(
                with open("methods.txt", "w") as f:
                    f.write(ll)
 
-            #    res1d = self.inputs.ai.integrate1d(
-            #         data=data,
-            #         npt=self.inputs.npt,
-            #         filename=filename_out,
-            #         method=self.inputs.method,
-            #     )
+               res1d = self.inputs.ai.integrate1d(
+                    data=data,
+                    npt=self.inputs.npt,
+                    filename=filename_out,
+                    method=self.inputs.method,
+                )
                
 class SplitList(
     Task,
