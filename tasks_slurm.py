@@ -3,6 +3,27 @@ from ewokscore import Task
 from ewoks import execute_graph, convert_graph
 import os
 
+class Write(
+    Task,
+    optional_input_names=["string"],
+):
+    def run(self):
+        if self.missing_inputs.string:
+            string = "hola"
+        else:
+            string = self.inputs.string
+
+        with open("write_dummy.txt", "a+") as f:
+            f.write(string)
+
+def generate_workflow_dummy(execute=True):
+    node_dummy = {"id" : "node_dummy", "task_type" : "class", "task_identifier" : "tasks_slurm.Write"}
+    graph = {"graph" : {"id" : "dummy_graph"}, "nodes" : [node_dummy], "links" : []}
+    convert_graph(graph, "workflows/dummy_workflow.json")
+    if execute:
+        execute_graph(graph)
+
+
 class ExecuteDaskSLURM(
     Task,
     input_names=["chunked_list", "poni", "npt", "method"],
@@ -19,6 +40,8 @@ class ExecuteDaskSLURM(
             ],
         )
 
+
+
 def activate_slurm_environment():
     os.environ["SLURM_USER"] = "edgar1993a"
     os.environ["SLURM_URL"] = "http://slurm-api.esrf.fr:6820"
@@ -26,3 +49,4 @@ def activate_slurm_environment():
 
 if __name__ == "__main__":
     activate_slurm_environment()
+    
