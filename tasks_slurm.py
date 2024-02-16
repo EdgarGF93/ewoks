@@ -283,7 +283,7 @@ class ExecuteDaskSLURM(
         )
 
 if __name__ == "__main__":
-    PATH = Path("/home/esrf/edgar1993a/work/ewoks_parallel/edf_data")
+    PATH = Path("/home/esrf/edgar1993a/work/ewoks/edf_data")
     FILENAME_LIST = [str(item) for item in PATH.glob("*.edf")]
     PONI = "data/lab6.poni"
     NPT = 2000
