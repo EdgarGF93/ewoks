@@ -40,13 +40,7 @@ class ExecuteDaskSLURM(
             ],
         )
 
-
-
-def activate_slurm_environment():
-    os.environ["SLURM_USER"] = "edgar1993a"
-    os.environ["SLURM_URL"] = "http://slurm-api.esrf.fr:6820"
-    os.environ["SLURM_TOKEN"] = "SLURM_JWT=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDgxNTg0MzksImlhdCI6MTcwODA3MjAzOSwic3VuIjoiZWRnYXIxOTkzYSJ9.-N-CYsyeybGifEiymJDudFDQDjdZPQFo9K6_qmnyXWU"
-
 if __name__ == "__main__":
-    activate_slurm_environment()
-    
+    pass
+
+
