@@ -95,22 +95,10 @@ class SplitList(
         self.outputs.index = index + 1
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 def generate_workflow_dummy(execute=True):
     node_dummy = {"id" : "node_dummy", "task_type" : "class", "task_identifier" : "tasks_slurm.Write"}
     graph = {"graph" : {"id" : "dummy_graph"}, "nodes" : [node_dummy], "links" : []}
-    convert_graph(graph, "workflows/dummy_workflow.json")
+    convert_graph(graph, "dummy_workflow.json")
     if execute:
         execute_graph(graph)
 
@@ -134,7 +122,7 @@ def get_subworkflow(filename_list, poni, npt, method):
     node_openai = {
         "id" : f"node_openai", 
         "task_type" : "class", 
-        "task_identifier" : "tasks_parallel.OpenAI",
+        "task_identifier" : "tasks_slurm.OpenAI",
         "default_inputs" : [{"name" : "filename_list", "value" : filename_list},
                             {"name" : "poni", "value" : poni},
                             {"name" : "npt", "value" : npt},
@@ -145,7 +133,7 @@ def get_subworkflow(filename_list, poni, npt, method):
     node_openintegratesave = {
         "id" : f"node_openintegratesave", 
         "task_type" : "class", 
-        "task_identifier" : "tasks_parallel.OpenIntegrateSave",
+        "task_identifier" : "tasks_slurm.OpenIntegrateSave",
     }
 
     link_1 = {
@@ -170,28 +158,23 @@ def get_subworkflow(filename_list, poni, npt, method):
     }
     return subgraph
 
-    # convert_graph(
-    #     subgraph,
-    #     "subworkflow_slurm.json"
-    # )
-
-
-def get_global_workflow(filename_list, poni, npt, method):
+def get_global_workflow(filename_list, poni, npt, method, chunk_size):
     node_split = {
          "id" : "node_split", 
          "task_type" : "class", 
-         "task_identifier" : "tasks_parallel.SplitList",
+         "task_identifier" : "tasks_slurm.SplitList",
          "default_inputs" : [{"name" : "filename_list", "value" : filename_list},
                              {"name" : "poni", "value" : poni},
                              {"name" : "npt", "value" : npt},
                              {"name" : "method", "value" : method},
+                             {"name" : "chunk_size", "value" : chunk_size},
                              ]
          }
     
     node_subworkflow = {
          "id" : "node_subworkflow", 
          "task_type" : "class", 
-         "task_identifier" : "tasks_parallel.ExecuteDask"}
+         "task_identifier" : "tasks_slurm.ExecuteDask"}
     
     link_1 = {
             "source" : f"node_split",
@@ -224,16 +207,16 @@ def get_global_workflow(filename_list, poni, npt, method):
     return graph
 
 
-
-def generate_god_workflow(filename_list, poni, npt, method, execute=False):
+def generate_god_workflow(filename_list, poni, npt, method, chunk_size, execute=False):
     node_god = {
         "id" : "node_god", 
         "task_type" : "class", 
         "task_identifier" : "tasks_slurm.ExecuteGlobalWorkflow",
-         "default_inputs" : [{"name" : "filename_list", "value" : filename_list},
+        "default_inputs" : [{"name" : "global_list", "value" : filename_list},
                              {"name" : "poni", "value" : poni},
                              {"name" : "npt", "value" : npt},
                              {"name" : "method", "value" : method},
+                             {"name" : "chunk_size", "value" : chunk_size},
                              ]
     }
     graph_god = {"graph" : {"id" : "graph_god"}, "nodes" : [node_god], "links" : []}
@@ -244,7 +227,7 @@ def generate_god_workflow(filename_list, poni, npt, method, execute=False):
 
 class ExecuteGlobalWorkflow(
     Task,
-    input_names=["global_list", "poni", "npt", "method"],
+    input_names=["global_list", "poni", "npt", "method", "chunk_size"],
 ):
     def run(self):
         # Execute the global workflow using PPF engine
@@ -254,6 +237,7 @@ class ExecuteGlobalWorkflow(
             poni=self.inputs.poni,
             npt=self.inputs.npt,
             method=self.inputs.method,
+            chunk_size=self.inputs.chunk_size,
         )
 
         execute_graph(
@@ -263,7 +247,7 @@ class ExecuteGlobalWorkflow(
 
 
 
-class ExecuteDaskSLURM(
+class ExecuteDask(
     Task,
     input_names=["chunked_list", "poni", "npt", "method"],
 ):
@@ -284,10 +268,12 @@ class ExecuteDaskSLURM(
 
 if __name__ == "__main__":
     PATH = Path("/home/esrf/edgar1993a/work/ewoks/edf_data")
+    #PATH = Path("/users/edgar1993a/work/ewoks_parallel/edf_data")
     FILENAME_LIST = [str(item) for item in PATH.glob("*.edf")]
     PONI = "data/lab6.poni"
     NPT = 2000
     METHOD = ("bbox", "csr", "cython")
+    CHUNK_SIZE = 3
 
     generate_god_workflow(
         filename_list=FILENAME_LIST,
@@ -295,4 +281,5 @@ if __name__ == "__main__":
         npt=NPT,
         method=METHOD,
         execute=False,
+        chunk_size=CHUNK_SIZE,
     )
