@@ -2,10 +2,9 @@
 from ewokscore import Task
 from ewoks import execute_graph, convert_graph
 import os
-import json
 import fabio
 from pyFAI import load
-from pyFAI.io
+from pathlib import Path
 
 class Write(
     Task,
@@ -131,48 +130,53 @@ def submit_dummy_workflow():
 
 
 def get_subworkflow(filename_list, poni, npt, method):
-        # Return the graph with the inputs, only need to be executed
-        node_openai = {
-            "id" : f"node_openai", 
-            "task_type" : "class", 
-            "task_identifier" : "tasks_parallel.OpenAI",
-            "default_inputs" : [{"name" : "filename_list", "value" : filename_list},
-                                {"name" : "poni", "value" : poni},
-                                {"name" : "npt", "value" : npt},
-                                {"name" : "method", "value" : method},
-                                ]
-        }
+    # Return the graph with the inputs, only need to be executed
+    node_openai = {
+        "id" : f"node_openai", 
+        "task_type" : "class", 
+        "task_identifier" : "tasks_parallel.OpenAI",
+        "default_inputs" : [{"name" : "filename_list", "value" : filename_list},
+                            {"name" : "poni", "value" : poni},
+                            {"name" : "npt", "value" : npt},
+                            {"name" : "method", "value" : method},
+                            ]
+    }
 
-        node_openintegratesave = {
-            "id" : f"node_openintegratesave", 
-            "task_type" : "class", 
-            "task_identifier" : "tasks_parallel.OpenIntegrateSave",
-        }
+    node_openintegratesave = {
+        "id" : f"node_openintegratesave", 
+        "task_type" : "class", 
+        "task_identifier" : "tasks_parallel.OpenIntegrateSave",
+    }
 
-        link_1 = {
-            "source" : f"node_openai",
-            "target" : f"node_openintegratesave",
-            "data_mapping" : [{"source_output" : "ai", "target_input" : "ai"},
-                              {"source_output" : "filename_list", "target_input" : "filename_list"},
-                              {"source_output" : "npt", "target_input" : "npt"},
-                              {"source_output" : "method", "target_input" : "method"},
-            ],
-        }
+    link_1 = {
+        "source" : f"node_openai",
+        "target" : f"node_openintegratesave",
+        "data_mapping" : [{"source_output" : "ai", "target_input" : "ai"},
+                            {"source_output" : "filename_list", "target_input" : "filename_list"},
+                            {"source_output" : "npt", "target_input" : "npt"},
+                            {"source_output" : "method", "target_input" : "method"},
+        ],
+    }
 
-        subgraph = {
-            "graph" : {"id" : f"subgraph"},
-            "nodes" : [
-                node_openai,
-                node_openintegratesave,
-            ],
-            "links" : [
-                link_1,
-            ],
-        }
-        return subgraph
+    subgraph = {
+        "graph" : {"id" : f"subgraph"},
+        "nodes" : [
+            node_openai,
+            node_openintegratesave,
+        ],
+        "links" : [
+            link_1,
+        ],
+    }
+    return subgraph
+
+    # convert_graph(
+    #     subgraph,
+    #     "subworkflow_slurm.json"
+    # )
 
 
-def generate_global_workflow(filename_list, poni, npt, method):
+def get_global_workflow(filename_list, poni, npt, method):
     node_split = {
          "id" : "node_split", 
          "task_type" : "class", 
@@ -217,11 +221,46 @@ def generate_global_workflow(filename_list, poni, npt, method):
         "nodes" : [node_split, node_subworkflow],
         "links" : [link_1, link_self],
     }
+    return graph
 
-    convert_graph(
-        graph,
-        "global_workflow_parallel_slurm.json"
-    )
+
+
+def generate_god_workflow(filename_list, poni, npt, method, execute=False):
+    node_god = {
+        "id" : "node_god", 
+        "task_type" : "class", 
+        "task_identifier" : "tasks_slurm.ExecuteGlobalWorkflow",
+         "default_inputs" : [{"name" : "filename_list", "value" : filename_list},
+                             {"name" : "poni", "value" : poni},
+                             {"name" : "npt", "value" : npt},
+                             {"name" : "method", "value" : method},
+                             ]
+    }
+    graph_god = {"graph" : {"id" : "graph_god"}, "nodes" : [node_god], "links" : []}
+    convert_graph(graph_god, "god_workflow.json")
+    if execute:
+        execute_graph(graph=graph_god, engine="dask")
+
+
+class ExecuteGlobalWorkflow(
+    Task,
+    input_names=["global_list", "poni", "npt", "method"],
+):
+    def run(self):
+        # Execute the global workflow using PPF engine
+
+        global_graph = get_global_workflow(
+            filename_list=self.inputs.global_list,
+            poni=self.inputs.poni,
+            npt=self.inputs.npt,
+            method=self.inputs.method,
+        )
+
+        execute_graph(
+            graph=global_graph,
+            engine="ppf",
+        )
+
 
 
 class ExecuteDaskSLURM(
@@ -229,22 +268,31 @@ class ExecuteDaskSLURM(
     input_names=["chunked_list", "poni", "npt", "method"],
 ):
     def run(self):
-        with open("final_subworkflow.json") as fp:
-            graph_subworkflow = json.load(fp)
-        print(graph_subworkflow)
+        # Execute a sub-workflow using Dask engine
+
+        sub_graph = get_subworkflow(
+            filename_list=self.inputs.chunked_list,
+            poni=self.inputs.poni,
+            npt=self.inputs.npt,
+            method=self.inputs.method,
+        )
+
         execute_graph(
-            graph="final_subworkflow.json",
+            graph=sub_graph,
             engine="dask",
-            inputs=[
-                {"name" : "poni", "value" : self.inputs.poni, "id" : "node_openai"},
-                {"name" : "filename_list", "value" : self.inputs.chunked_list, "id" : "node_openai"},
-                {"name" : "npt", "value" : self.inputs.npt, "id" : "node_openai"},
-                {"name" : "method", "value" : self.inputs.method, "id" : "node_openai"},
-            ],
         )
 
 if __name__ == "__main__":
-    with open("subworkflow_parallel.json") as fp:
-        graph_subworkflow = json.load(fp)
-    print(graph_subworkflow)
+    PATH = Path("/home/esrf/edgar1993a/work/ewoks_parallel/edf_data")
+    FILENAME_LIST = [str(item) for item in PATH.glob("*.edf")]
+    PONI = "data/lab6.poni"
+    NPT = 2000
+    METHOD = ("bbox", "csr", "cython")
 
+    generate_god_workflow(
+        filename_list=FILENAME_LIST,
+        poni=PONI,
+        npt=NPT,
+        method=METHOD,
+        execute=False,
+    )
