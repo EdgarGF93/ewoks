@@ -104,7 +104,7 @@ class ExecuteDaskSLURM(
 ):
     def run(self):
         execute_graph(
-            graph="final_subworkflow.json",
+            graph="final_subworkflow_slurm.json",
             engine="dask",
             inputs=[
                 {"name" : "poni", "value" : self.inputs.poni, "id" : "node_openai"},
