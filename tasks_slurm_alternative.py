@@ -10,7 +10,7 @@ import numpy as np
 import time
 import matplotlib.pyplot as plt
 from ewoksjob.client import submit
-
+from pyFAI.method_registry import IntegrationMethod
 class Write(
     Task,
     optional_input_names=["string"],
@@ -52,12 +52,16 @@ class OpenIntegrateSave(
                filename = str(filename)
                data = fabio.open(filename).data
                filename_out = filename.replace(".edf", "_1d.dat")
-               res1d = self.inputs.ai.integrate1d(
-                    data=data,
-                    npt=self.inputs.npt,
-                    filename=filename_out,
-                    method=self.inputs.method,
-                )
+               ll = IntegrationMethod.list_available()
+               with open("methods.txt", "w") as f:
+                   f.write(ll)
+
+            #    res1d = self.inputs.ai.integrate1d(
+            #         data=data,
+            #         npt=self.inputs.npt,
+            #         filename=filename_out,
+            #         method=self.inputs.method,
+            #     )
                
 class SplitList(
     Task,
@@ -304,7 +308,7 @@ class ExecuteSubWorkflow(
             engine="dask",
         )
 
-
+import pyslurmutils
 class ExecuteSubWorkflowSLURM(
     Task,
     input_names=["path_to_find", "chunk_range", "pattern", "poni", "npt", "method"],
@@ -321,8 +325,24 @@ class ExecuteSubWorkflowSLURM(
             method=self.inputs.method,
         )
 
+        kwargs = {}
+        kwargs["_slurm_spawn_arguments"] = {
+            "parameters": {
+                "time_limit": 360,
+                # "minimum_cpus_per_node" : 4,
+                # "max_cpus" : {
+                # "number" : 5,
+                # "set" : False,
+                # "infinite" : True,
+                # },
+                # "gpus_per_node"
+                # "current_working_directory": "/other/path/to/data",
+            },
+            # "pre_script": "module load myotherenv",
+        }
+
         # Now we have to submit this graph to slurm
-        future = submit(args=(sub_graph,))
+        future = submit(args=(sub_graph,), kwargs=kwargs)
         result = future.get(timeout=None)
 
 
@@ -373,10 +393,11 @@ if __name__ == "__main__":
     PATTERN = "*.edf"
     PONI = "data/lab6.poni"
     NPT = 2000
-    METHOD = ("bbox", "csr", "opencl")
-    NFILES = 10
-    CHUNK_SIZE = 5
+    METHOD = ("bbox", "csr", "cython")
+    NFILES = 1
+    CHUNK_SIZE = 1
 
+    st = time.perf_counter()
     generate_god_workflow(
         path_to_find=PATH_UNIX,
         pattern=PATTERN,
@@ -387,6 +408,8 @@ if __name__ == "__main__":
         method=METHOD,
         execute_slurm=True,
     )
+    ft = time.perf_counter() - st
+    print(ft)
 
 
     # benchmark_execution(
