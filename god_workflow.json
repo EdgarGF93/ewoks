@@ -1,0 +1,46 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {
+    "id": "graph_god",
+    "schema_version": "1.0"
+  },
+  "nodes": [
+    {
+      "task_type": "class",
+      "task_identifier": "tasks_slurm.ExecuteGlobalWorkflow",
+      "default_inputs": [
+        {
+          "name": "path_to_find",
+          "value": "/home/esrf/edgar1993a/work/ewoks/edf_data"
+        },
+        {
+          "name": "pattern",
+          "value": "*.edf"
+        },
+        {
+          "name": "poni",
+          "value": "data/lab6.poni"
+        },
+        {
+          "name": "npt",
+          "value": 2000
+        },
+        {
+          "name": "method",
+          "value": [
+            "bbox",
+            "csr",
+            "cython"
+          ]
+        },
+        {
+          "name": "chunk_size",
+          "value": 50
+        }
+      ],
+      "id": "node_god"
+    }
+  ],
+  "links": []
+}
