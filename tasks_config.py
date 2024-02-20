@@ -12,8 +12,6 @@ import matplotlib.pyplot as plt
 from ewoksjob.client import submit
 #from pyFAI.app.integrate import process
 from pyFAI.io.image import read_data
-from pyFAI import detector_factory
-from pyFAI.azimuthalIntegrator import AzimuthalIntegrator
 from test_slurm import get_test_graph
 
 def generate_workflow_dummy(execute=True):
@@ -317,7 +315,6 @@ def get_global_workflow(path_to_find, pattern, nfiles, chunk_size, config, slurm
     return graph
 
 def execute_god_workflow(path_to_find, pattern, nfiles, chunk_size, config, slurm=True) -> None:
-
     node_god = {
         "id" : "node_god", 
         "task_type" : "class", 
@@ -347,10 +344,9 @@ def benchmark_execution(
 ):
     chunks = np.linspace(int(nfiles / 10), int(nfiles), 10)
     y = []
-    os.system("rm edf_data/*.dat")
     for chunk_size in chunks:
-        st = time.perf_counter()
 
+        st = time.perf_counter()
         execute_god_workflow(
             path_to_find=path_to_find,
             pattern=pattern,
@@ -359,48 +355,56 @@ def benchmark_execution(
             config=config,
             slurm=slurm,
         )
-
         ft = time.perf_counter() - st
         y.append(ft)
-        os.system("rm /home/esrf/edgar1993a/work/ewoks/edf_data/*.dat")
+
+        # remove files
+        for file_dat in Path(path_to_find).glob("p1m_*.dat"):
+            file_dat.unlink()        
+
     plt.plot(chunks, np.array(y), marker='o', ls='--')
     plt.xlabel("Chunk size")
     plt.ylabel(f"Time to integrate {str(int(nfiles))} frames")
     with open(config) as fp:
         config_dict = json.load(fp)
     plt.title(str(config_dict["method"]))
-    # plt.savefig(f"benchmark_chunks_{str(str(config_dict["method"]))}_{str(nfiles)}.png")
+    if slurm:
+        title = f"benchmark_chunks_{str(str(config_dict["method"]))}_{str(nfiles)}_slurm.png"
+    else:
+        title = f"benchmark_chunks_{str(str(config_dict["method"]))}_{str(nfiles)}_local.png"
+    plt.savefig(title)
     plt.close()
 
 if __name__ == "__main__":
-    PATH_UNIX = "/home/esrf/edgar1993a/work/ewoks/edf_data"
-    PATH_LOCAL = "/users/edgar1993a/work/ewoks_parallel/edf_data"
-    PATTERN = "*.edf"
+    # PATH_UNIX = "/home/esrf/edgar1993a/work/ewoks/edf_data"
+    # PATH_LOCAL = "/users/edgar1993a/work/ewoks_parallel/edf_data"    
 
-    NFILES = 10
-    CHUNK_SIZE = 110
-    CONFIG = "ewoks_config_cython_unix.json"
+    PATH_DATA_INHOUSE = "/data/bm28/inhouse/Edgar/data_ewoks/P1M"
+    PATTERN = "*.edf"
+    NFILES = 100
+    CHUNK_SIZE = 20
+    CONFIG = "p1m_config_cython.json"
+    SLURM = True
 
     # st = time.perf_counter()
     # execute_god_workflow(
-    #     path_to_find=PATH_UNIX,
+    #     path_to_find=PATH_DATA_INHOUSE,
     #     pattern=PATTERN,
     #     nfiles = NFILES,
     #     chunk_size=CHUNK_SIZE,
     #     config=CONFIG,
-    #     slurm=True,
+    #     slurm=SLURM,
     # )
     # ft = time.perf_counter() - st
-
     # print(ft)
 
 
     benchmark_execution(
-        path_to_find=PATH_UNIX,
+        path_to_find=PATH_DATA_INHOUSE,
         pattern=PATTERN,
         nfiles=NFILES,
         config=CONFIG,
-        slurm=True,
+        slurm=SLURM,
     )
 
     # x = np.array([20, 35, 65, 100, 150])
