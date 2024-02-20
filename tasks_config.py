@@ -72,17 +72,17 @@ class OpenIntegrateSave(Task, input_names=["path_to_find", "chunk_range", "patte
         # )
 
 
-        # ai = load(self.inputs.config)
-        ai = AzimuthalIntegrator(
-            dist=config["dist"],
-            poni1=config["poni1"],
-            poni2=config["poni2"],
-            rot1=config["rot1"],
-            rot2=config["rot2"],
-            rot3=config["rot3"],
-            wavelength=config["wavelength"],
-            detector=detector_factory(name=config["detector"], config=config["detector_config"]),
-        )
+        ai = load(self.inputs.config)
+        # ai = AzimuthalIntegrator(
+        #     dist=config["dist"],
+        #     poni1=config["poni1"],
+        #     poni2=config["poni2"],
+        #     rot1=config["rot1"],
+        #     rot2=config["rot2"],
+        #     rot3=config["rot3"],
+        #     wavelength=config["wavelength"],
+        #     detector=detector_factory(name=config["detector"], config=config["detector_config"]),
+        # )
         return
 
         # if config["do_mask"]:
@@ -232,7 +232,7 @@ class ExecuteSubWorkflowSLURM(
 
         kwargs = {}
         kwargs["_slurm_spawn_arguments"] = {
-            "pre_script": "module load pyfai/2024-1",
+            "pre_script": "module load pyfai/2024.2",
             "parameters": {
                 "time_limit": 360,
                 # "minimum_cpus_per_node" : 14,
