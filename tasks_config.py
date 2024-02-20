@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 from ewoksjob.client import submit
 #from pyFAI.app.integrate import process
 from pyFAI.io.image import read_data
-from ewokscore.task import 
+from test_slurm import get_test_graph
 
 def generate_workflow_dummy(execute=True):
     node_dummy = {"id" : "node_dummy", "task_type" : "class", "task_identifier" : "tasks_config.Write"}
@@ -157,7 +157,13 @@ class SplitList(
 
 class ExecuteGlobalWorkflow(
     Task,
-    input_names=["path_to_find", "pattern", "nfiles", "chunk_size", "config"],
+    input_names=[
+        "path_to_find", 
+        "pattern", 
+        "nfiles", 
+        "chunk_size", 
+        "config", 
+        "slurm"],
 ):
     def run(self):
         # Execute the global workflow using PPF engine
@@ -219,8 +225,9 @@ class ExecuteSubWorkflowSLURM(
 
 
         # Now we have to submit this graph to slurm
-        future = submit(args=(sub_graph,), kwargs=kwargs)
-        result = future.get()
+        test_graph = get_test_graph()
+        future = submit(args=(sub_graph,), kw=kwargs)
+        result = future.get(timeout=None)
 
 def get_subworkflow(path_to_find, chunk_range, pattern, config) -> dict:
 
@@ -308,7 +315,7 @@ def get_global_workflow(path_to_find, pattern, nfiles, chunk_size, config, slurm
     # convert_graph(graph, "global_workflow_config.json")
     return graph
 
-def execute_god_workflow(path_to_find, pattern, nfiles, chunk_size, config, execute_slurm=True) -> None:
+def execute_god_workflow(path_to_find, pattern, nfiles, chunk_size, config, slurm=True) -> None:
 
     node_god = {
         "id" : "node_god", 
@@ -319,14 +326,14 @@ def execute_god_workflow(path_to_find, pattern, nfiles, chunk_size, config, exec
                             {"name" : "nfiles", "value" : nfiles},
                             {"name" : "chunk_size", "value" : chunk_size},                            
                             {"name" : "config", "value" : config},
-                            {"name" : "slurm", "value" : execute_slurm},
+                            {"name" : "slurm", "value" : slurm},
                             ]
     }
     graph_god = {"graph" : {"id" : "graph_god"}, "nodes" : [node_god], "links" : []}
     # convert_graph(graph_god, "god_workflow.json")
 
-    if execute_slurm:
-        activate_slurm_env()
+    # if execute_slurm:
+    #     activate_slurm_env()
 
     execute_graph(graph=graph_god, engine="dask")
 
@@ -349,7 +356,7 @@ def benchmark_execution(
             nfiles = nfiles,
             chunk_size=chunk_size,
             config=config,
-            execute_slurm=False,
+            slurm=False,
         )
 
         ft = time.perf_counter() - st
@@ -380,7 +387,7 @@ if __name__ == "__main__":
         nfiles = NFILES,
         chunk_size=CHUNK_SIZE,
         config=CONFIG,
-        execute_slurm=True,
+        slurm=True,
     )
     ft = time.perf_counter() - st
     print(ft)

@@ -9,15 +9,20 @@ class SlurmPrint(Task):
         with open("test_slurm.txt", "a+") as f:
             f.write("hola\n")
 
-def run_test():
+def get_test_graph():
     nodes = [{"id" : "node", "task_type": "class", "task_identifier" : "test_slurm.SlurmPrint"}]
-    graph = {"graph" : {"id" : "graph"}, "nodes" : nodes, "links" : []}
-    convert_graph(graph, "test_slurm.json")
-    cmd = "ewoks submit test_slurm.json"
-    os.system(cmd)
+    graph = {"graph" : {"id" : "graph"}, "nodes" : nodes, "links" : []}    
+    return graph
 
-    # future = submit(args=(graph,))
-    # result = future.get(timeout=None)
+def run_test():
+    graph = get_test_graph()
+    convert_graph(graph, "test_slurm.json")
+
+    # cmd = "ewoks submit test_slurm.json"
+    # os.system(cmd)
+
+    future = submit(args=(graph,))
+    result = future.get(timeout=None)
 
 
 if __name__ == "__main__":
