@@ -12,6 +12,8 @@ import matplotlib.pyplot as plt
 from ewoksjob.client import submit
 #from pyFAI.app.integrate import process
 from pyFAI.io.image import read_data
+from pyFAI import detector_factory
+from pyFAI.azimuthalIntegrator import AzimuthalIntegrator
 from test_slurm import get_test_graph
 
 def generate_workflow_dummy(execute=True):
@@ -315,6 +317,7 @@ def get_global_workflow(path_to_find, pattern, nfiles, chunk_size, config, slurm
     return graph
 
 def execute_god_workflow(path_to_find, pattern, nfiles, chunk_size, config, slurm=True) -> None:
+
     node_god = {
         "id" : "node_god", 
         "task_type" : "class", 
@@ -344,6 +347,7 @@ def benchmark_execution(
 ):
     chunks = np.linspace(int(nfiles / 10), int(nfiles), 10)
     y = []
+
     for chunk_size in chunks:
 
         st = time.perf_counter()
@@ -359,8 +363,8 @@ def benchmark_execution(
         y.append(ft)
 
         # remove files
-        for file_dat in Path(path_to_find).glob("p1m_*.dat"):
-            file_dat.unlink()        
+        # for file_dat in Path(path_to_find).glob("p1m_*.dat"):
+        #     file_dat.unlink()        
 
     plt.plot(chunks, np.array(y), marker='o', ls='--')
     plt.xlabel("Chunk size")
