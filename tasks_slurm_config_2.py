@@ -39,6 +39,7 @@ class OpenIntegrateSave(Task, input_names=["path_to_find", "chunk_range", "patte
         with open(self.inputs.config) as fp:
             config = json.load(fp)
         ai = load(self.inputs.config)
+        ai.setup_sparse_integrator(shape=ai.detector.shape, npt=config["nbpt_rad"])
 
         for filename in list_filenames:
             res = ai.integrate1d(
