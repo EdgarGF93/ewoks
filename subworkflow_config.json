@@ -12,13 +12,13 @@
       "default_inputs": [
         {
           "name": "path_to_find",
-          "value": "/users/edgar1993a/work/ewoks_parallel/edf_data"
+          "value": "/home/esrf/edgar1993a/work/ewoks/edf_data"
         },
         {
           "name": "chunk_range",
           "value": [
-            0.0,
-            100.0
+            5,
+            10
           ]
         },
         {
@@ -27,7 +27,7 @@
         },
         {
           "name": "config",
-          "value": "ewoks_config.json"
+          "value": "ewoks_config_cython.json"
         }
       ],
       "id": "node_openintegratesave"

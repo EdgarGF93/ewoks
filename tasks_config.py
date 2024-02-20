@@ -12,13 +12,15 @@ import matplotlib.pyplot as plt
 from ewoksjob.client import submit
 #from pyFAI.app.integrate import process
 from pyFAI.io.image import read_data
+from ewokscore.task import 
 
-# def generate_workflow_dummy(execute=True):
-#     node_dummy = {"id" : "node_dummy", "task_type" : "class", "task_identifier" : "tasks_config.Write"}
-#     graph = {"graph" : {"id" : "dummy_graph"}, "nodes" : [node_dummy], "links" : []}
-#     convert_graph(graph, "dummy_workflow.json")
-#     if execute:
-#         execute_graph(graph)
+def generate_workflow_dummy(execute=True):
+    node_dummy = {"id" : "node_dummy", "task_type" : "class", "task_identifier" : "tasks_config.Write"}
+    graph = {"graph" : {"id" : "dummy_graph"}, "nodes" : [node_dummy], "links" : []}
+    return graph
+    # convert_graph(graph, "dummy_workflow.json")
+    # if execute:
+    #     execute_graph(graph)
 
 
 def activate_slurm_env():
@@ -209,15 +211,16 @@ class ExecuteSubWorkflowSLURM(
         kwargs = {}
         kwargs["_slurm_spawn_arguments"] = {
             "pre_script": "module load ewoks",
-            "parameters": {
-                "time_limit": 360,
-                "minimum_cpus_per_node" : 14,
-            },
+            # "parameters": {
+            #     "time_limit": 360,
+            #     "minimum_cpus_per_node" : 14,
+            # },
         }
+
 
         # Now we have to submit this graph to slurm
         future = submit(args=(sub_graph,), kwargs=kwargs)
-        result = future.get(timeout=None)
+        result = future.get()
 
 def get_subworkflow(path_to_find, chunk_range, pattern, config) -> dict:
 
@@ -239,7 +242,7 @@ def get_subworkflow(path_to_find, chunk_range, pattern, config) -> dict:
         ],
         "links" : [],
     }
-    convert_graph(subgraph, "subworkflow_config.json")
+    # convert_graph(subgraph, "subworkflow_config.json")
     return subgraph
 
 def get_global_workflow(path_to_find, pattern, nfiles, chunk_size, config, slurm) -> dict:
@@ -302,7 +305,7 @@ def get_global_workflow(path_to_find, pattern, nfiles, chunk_size, config, slurm
         "links" : [link_1, link_self],
         
     }
-    convert_graph(graph, "global_workflow_config.json")
+    # convert_graph(graph, "global_workflow_config.json")
     return graph
 
 def execute_god_workflow(path_to_find, pattern, nfiles, chunk_size, config, execute_slurm=True) -> None:
@@ -320,7 +323,7 @@ def execute_god_workflow(path_to_find, pattern, nfiles, chunk_size, config, exec
                             ]
     }
     graph_god = {"graph" : {"id" : "graph_god"}, "nodes" : [node_god], "links" : []}
-    convert_graph(graph_god, "god_workflow.json")
+    # convert_graph(graph_god, "god_workflow.json")
 
     if execute_slurm:
         activate_slurm_env()
@@ -358,7 +361,7 @@ def benchmark_execution(
     with open(config) as fp:
         config_dict = json.load(fp)
     plt.title(str(config_dict["method"]))
-    plt.savefig(f"benchmark_chunks_{str(str(config_dict["method"]))}_{str(nfiles)}.png")
+    # plt.savefig(f"benchmark_chunks_{str(str(config_dict["method"]))}_{str(nfiles)}.png")
     plt.close()
 
 if __name__ == "__main__":
@@ -366,30 +369,30 @@ if __name__ == "__main__":
     PATH_LOCAL = "/users/edgar1993a/work/ewoks_parallel/edf_data"
     PATTERN = "*.edf"
 
-    NFILES = 100
-    CHUNK_SIZE = 50
-    CONFIG = "ewoks_config.json"
+    NFILES = 10
+    CHUNK_SIZE = 5
+    CONFIG = "ewoks_config_cython.json"
 
-    # st = time.perf_counter()
-    # generate_god_workflow(
+    st = time.perf_counter()
+    execute_god_workflow(
+        path_to_find=PATH_UNIX,
+        pattern=PATTERN,
+        nfiles = NFILES,
+        chunk_size=CHUNK_SIZE,
+        config=CONFIG,
+        execute_slurm=True,
+    )
+    ft = time.perf_counter() - st
+    print(ft)
+
+
+    # benchmark_execution(
     #     path_to_find=PATH_LOCAL,
     #     pattern=PATTERN,
-    #     nfiles = NFILES,
-    #     chunk_size=CHUNK_SIZE,
+    #     nfiles=NFILES,
     #     config=CONFIG,
-    #     execute_slurm=False,
+    #     slurm=False,
     # )
-    # ft = time.perf_counter() - st
-    # print(ft)
-
-
-    benchmark_execution(
-        path_to_find=PATH_LOCAL,
-        pattern=PATTERN,
-        nfiles=NFILES,
-        config=CONFIG,
-        slurm=False,
-    )
 
     # x = np.array([20, 35, 65, 100, 150])
     # y = np.array([46, 34, 18.8, 28, 33.23])

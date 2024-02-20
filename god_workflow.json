@@ -12,7 +12,7 @@
       "default_inputs": [
         {
           "name": "path_to_find",
-          "value": "/users/edgar1993a/work/ewoks_parallel/edf_data"
+          "value": "/home/esrf/edgar1993a/work/ewoks/edf_data"
         },
         {
           "name": "pattern",
@@ -20,19 +20,19 @@
         },
         {
           "name": "nfiles",
-          "value": 100
+          "value": 10
         },
         {
           "name": "chunk_size",
-          "value": 100.0
+          "value": 5
         },
         {
           "name": "config",
-          "value": "ewoks_config.json"
+          "value": "ewoks_config_cython.json"
         },
         {
           "name": "slurm",
-          "value": false
+          "value": true
         }
       ],
       "id": "node_god"

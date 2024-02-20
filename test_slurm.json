@@ -1,0 +1,16 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {
+    "id": "graph",
+    "schema_version": "1.0"
+  },
+  "nodes": [
+    {
+      "task_type": "class",
+      "task_identifier": "test_slurm.SlurmPrint",
+      "id": "node"
+    }
+  ],
+  "links": []
+}
