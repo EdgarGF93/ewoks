@@ -15,7 +15,7 @@
         "orientation": 3
     },
     "do_mask": true,
-    "mask_file": "fabio:///users/edgar1993a/work/ewoks_parallel/data/lab6_mask.edf",
+    "mask_file": "fabio:///home/esrf/edgar1993a/work/ewoks/data/lab6_mask.edf",
     "do_dark": false,
     "dark_current": null,
     "do_flat": false,
@@ -40,6 +40,10 @@
     "method": [
         "bbox",
         "csr",
-        "cython"
+        "opencl"
+    ],
+    "opencl_device": [
+        0,
+        0
     ]
 }

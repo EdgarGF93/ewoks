@@ -377,9 +377,9 @@ if __name__ == "__main__":
     PATH_LOCAL = "/users/edgar1993a/work/ewoks_parallel/edf_data"
     PATTERN = "*.edf"
 
-    NFILES = 10
-    CHUNK_SIZE = 5
-    CONFIG = "ewoks_config_cython.json"
+    NFILES = 100
+    CHUNK_SIZE = 20
+    CONFIG = "ewoks_config_cython_unix.json"
 
     st = time.perf_counter()
     execute_god_workflow(
