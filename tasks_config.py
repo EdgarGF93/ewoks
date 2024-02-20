@@ -57,9 +57,6 @@ class OpenIntegrateSave(Task, input_names=["path_to_find", "chunk_range", "patte
         chunk_range = [int(_) for _ in self.inputs.chunk_range]
         list_filenames = [str(item) for item in islice(path.glob(pattern), chunk_range[0], chunk_range[1])]
 
-        return
-
-
         with open(self.inputs.config) as fp:
             config = json.load(fp)
 
@@ -106,6 +103,7 @@ class OpenIntegrateSave(Task, input_names=["path_to_find", "chunk_range", "patte
             polarization_factor = None
 
         for filename in list_filenames:
+            return
             res = ai.integrate1d(
                 data=read_data(filename),
                 npt=config["nbpt_rad"],
