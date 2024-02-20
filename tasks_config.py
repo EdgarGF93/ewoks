@@ -396,7 +396,7 @@ if __name__ == "__main__":
 
 
     benchmark_execution(
-        path_to_find=PATH_LOCAL,
+        path_to_find=PATH_UNIX,
         pattern=PATTERN,
         nfiles=NFILES,
         config=CONFIG,
