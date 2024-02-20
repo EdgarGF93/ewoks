@@ -225,7 +225,7 @@ class ExecuteSubWorkflowSLURM(
 
         # Now we have to submit this graph to slurm
         test_graph = get_test_graph()
-        future = submit(args=(sub_graph,), kw=kwargs)
+        future = submit(args=(test_graph,), kw=kwargs)
         result = future.get(timeout=None)
 
 def get_subworkflow(path_to_find, chunk_range, pattern, config) -> dict:
@@ -385,33 +385,25 @@ if __name__ == "__main__":
     CHUNK_SIZE = 20
     CONFIG = "p1m_config_cython.json"
     SLURM = True
+    BENCHMARK = False
 
-    # st = time.perf_counter()
-    # execute_god_workflow(
-    #     path_to_find=PATH_DATA_INHOUSE,
-    #     pattern=PATTERN,
-    #     nfiles = NFILES,
-    #     chunk_size=CHUNK_SIZE,
-    #     config=CONFIG,
-    #     slurm=SLURM,
-    # )
-    # ft = time.perf_counter() - st
-    # print(ft)
-
-
-    benchmark_execution(
-        path_to_find=PATH_DATA_INHOUSE,
-        pattern=PATTERN,
-        nfiles=NFILES,
-        config=CONFIG,
-        slurm=SLURM,
-    )
-
-    # x = np.array([20, 35, 65, 100, 150])
-    # y = np.array([46, 34, 18.8, 28, 33.23])
-    # plt.plot(x, y, marker='o', ls='--')
-    # plt.xlabel("Chunk size")
-    # plt.ylabel(f"Time to integrate 1000 frames")
-    # plt.title("bbox_csr_cython")
-    # plt.savefig(f"benchmark_chunks_bbox_csr_cython_1000_SLURM.png")
-    # plt.close()
+    if BENCHMARK:
+        benchmark_execution(
+            path_to_find=PATH_DATA_INHOUSE,
+            pattern=PATTERN,
+            nfiles=NFILES,
+            config=CONFIG,
+            slurm=SLURM,
+        )
+    else:
+        st = time.perf_counter()
+        execute_god_workflow(
+            path_to_find=PATH_DATA_INHOUSE,
+            pattern=PATTERN,
+            nfiles = NFILES,
+            chunk_size=CHUNK_SIZE,
+            config=CONFIG,
+            slurm=SLURM,
+        )
+        ft = time.perf_counter() - st
+        print(ft)
