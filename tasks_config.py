@@ -68,6 +68,7 @@ class OpenIntegrateSave(Task, input_names=["path_to_find", "chunk_range", "patte
         #     observer=None,
         #     monitor_name=None,
         # )
+        return
 
         ai = load(config)
 
@@ -381,29 +382,38 @@ if __name__ == "__main__":
 
     PATH_DATA_INHOUSE = "/data/bm28/inhouse/Edgar/data_ewoks/P1M"
     PATTERN = "*.edf"
-    NFILES = 100
-    CHUNK_SIZE = 20
+    NFILES = 10
+    CHUNK_SIZE = 10
     CONFIG = "p1m_config_cython.json"
     SLURM = True
     BENCHMARK = False
 
-    if BENCHMARK:
-        benchmark_execution(
-            path_to_find=PATH_DATA_INHOUSE,
-            pattern=PATTERN,
-            nfiles=NFILES,
-            config=CONFIG,
-            slurm=SLURM,
-        )
-    else:
-        st = time.perf_counter()
-        execute_god_workflow(
-            path_to_find=PATH_DATA_INHOUSE,
-            pattern=PATTERN,
-            nfiles = NFILES,
-            chunk_size=CHUNK_SIZE,
-            config=CONFIG,
-            slurm=SLURM,
-        )
-        ft = time.perf_counter() - st
-        print(ft)
+
+    execute_god_workflow(
+        path_to_find=PATH_DATA_INHOUSE,
+        pattern=PATTERN,
+        nfiles = NFILES,
+        chunk_size=CHUNK_SIZE,
+        config=CONFIG,
+        slurm=SLURM,
+    )
+    # if BENCHMARK:
+    #     benchmark_execution(
+    #         path_to_find=PATH_DATA_INHOUSE,
+    #         pattern=PATTERN,
+    #         nfiles=NFILES,
+    #         config=CONFIG,
+    #         slurm=SLURM,
+    #     )
+    # else:
+    #     st = time.perf_counter()
+    #     execute_god_workflow(
+    #         path_to_find=PATH_DATA_INHOUSE,
+    #         pattern=PATTERN,
+    #         nfiles = NFILES,
+    #         chunk_size=CHUNK_SIZE,
+    #         config=CONFIG,
+    #         slurm=SLURM,
+    #     )
+    #     ft = time.perf_counter() - st
+    #     print(ft)
