@@ -57,6 +57,9 @@ class OpenIntegrateSave(Task, input_names=["path_to_find", "chunk_range", "patte
         chunk_range = [int(_) for _ in self.inputs.chunk_range]
         list_filenames = [str(item) for item in islice(path.glob(pattern), chunk_range[0], chunk_range[1])]
 
+        return
+
+
         with open(self.inputs.config) as fp:
             config = json.load(fp)
 
@@ -216,11 +219,11 @@ class ExecuteSubWorkflowSLURM(
 
         kwargs = {}
         kwargs["_slurm_spawn_arguments"] = {
-            "pre_script": "module load ewoks",
-            # "parameters": {
-            #     "time_limit": 360,
-            #     "minimum_cpus_per_node" : 14,
-            # },
+            "pre_script": "module load pyfai/2024-1",
+            "parameters": {
+                "time_limit": 360,
+                # "minimum_cpus_per_node" : 14,
+            },
         }
 
 
