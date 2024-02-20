@@ -373,9 +373,9 @@ def benchmark_execution(
         config_dict = json.load(fp)
     plt.title(str(config_dict["method"]))
     if slurm:
-        title = f"benchmark_chunks_{str(str(config_dict["method"]))}_{str(nfiles)}_slurm.png"
+        title = f"benchmark_chunks_{str(str(config_dict['method']))}_{str(nfiles)}_slurm.png"
     else:
-        title = f"benchmark_chunks_{str(str(config_dict["method"]))}_{str(nfiles)}_local.png"
+        title = f"benchmark_chunks_{str(str(config_dict['method']))}_{str(nfiles)}_local.png"
     plt.savefig(title)
     plt.close()
 
