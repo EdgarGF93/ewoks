@@ -68,7 +68,6 @@ class OpenIntegrateSave(Task, input_names=["path_to_find", "chunk_range", "patte
         #     observer=None,
         #     monitor_name=None,
         # )
-        return
 
         ai = load(config)
 
@@ -377,20 +376,21 @@ def benchmark_execution(
     plt.close()
 
 if __name__ == "__main__":
-    # PATH_UNIX = "/home/esrf/edgar1993a/work/ewoks/edf_data"
-    # PATH_LOCAL = "/users/edgar1993a/work/ewoks_parallel/edf_data"    
+    PATH_UNIX = "/home/esrf/edgar1993a/work/ewoks/edf_data"
+    PATH_LOCAL = "/users/edgar1993a/work/ewoks_parallel/edf_data"    
 
     PATH_DATA_INHOUSE = "/data/bm28/inhouse/Edgar/data_ewoks/P1M"
     PATTERN = "*.edf"
     NFILES = 10
     CHUNK_SIZE = 10
-    CONFIG = "p1m_config_cython.json"
+    #CONFIG = "p1m_config_cython.json"
+    CONFIG = "ewoks_config_cython_unix.json"
     SLURM = True
     BENCHMARK = False
 
 
     execute_god_workflow(
-        path_to_find=PATH_DATA_INHOUSE,
+        path_to_find=PATH_UNIX,
         pattern=PATTERN,
         nfiles = NFILES,
         chunk_size=CHUNK_SIZE,
