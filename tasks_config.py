@@ -357,12 +357,12 @@ def benchmark_execution(
             nfiles = nfiles,
             chunk_size=chunk_size,
             config=config,
-            slurm=False,
+            slurm=slurm,
         )
 
         ft = time.perf_counter() - st
         y.append(ft)
-        os.system("rm edf_data/*.dat")
+        os.system("rm /home/esrf/edgar1993a/work/ewoks/edf_data/*.dat")
     plt.plot(chunks, np.array(y), marker='o', ls='--')
     plt.xlabel("Chunk size")
     plt.ylabel(f"Time to integrate {str(int(nfiles))} frames")
@@ -377,30 +377,31 @@ if __name__ == "__main__":
     PATH_LOCAL = "/users/edgar1993a/work/ewoks_parallel/edf_data"
     PATTERN = "*.edf"
 
-    NFILES = 100
-    CHUNK_SIZE = 20
+    NFILES = 10
+    CHUNK_SIZE = 110
     CONFIG = "ewoks_config_cython_unix.json"
 
-    st = time.perf_counter()
-    execute_god_workflow(
-        path_to_find=PATH_UNIX,
+    # st = time.perf_counter()
+    # execute_god_workflow(
+    #     path_to_find=PATH_UNIX,
+    #     pattern=PATTERN,
+    #     nfiles = NFILES,
+    #     chunk_size=CHUNK_SIZE,
+    #     config=CONFIG,
+    #     slurm=True,
+    # )
+    # ft = time.perf_counter() - st
+
+    # print(ft)
+
+
+    benchmark_execution(
+        path_to_find=PATH_LOCAL,
         pattern=PATTERN,
-        nfiles = NFILES,
-        chunk_size=CHUNK_SIZE,
+        nfiles=NFILES,
         config=CONFIG,
         slurm=True,
     )
-    ft = time.perf_counter() - st
-    print(ft)
-
-
-    # benchmark_execution(
-    #     path_to_find=PATH_LOCAL,
-    #     pattern=PATTERN,
-    #     nfiles=NFILES,
-    #     config=CONFIG,
-    #     slurm=False,
-    # )
 
     # x = np.array([20, 35, 65, 100, 150])
     # y = np.array([46, 34, 18.8, 28, 33.23])

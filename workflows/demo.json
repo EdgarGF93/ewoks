@@ -1,0 +1,535 @@
+{
+  "graph": {
+    "id": "demo",
+    "label": "demo",
+    "category": "",
+    "input_nodes": [],
+    "output_nodes": [],
+    "uiProps": {
+      "source": "fromServer",
+      "notes": []
+    }
+  },
+  "nodes": [
+    {
+      "id": "task1",
+      "label": "ewokscore.tests.examples.tasks.sumtask.SumTask",
+      "task_type": "class",
+      "task_identifier": "ewokscore.tests.examples.tasks.sumtask.SumTask",
+      "inputs_complete": false,
+      "task_generator": null,
+      "default_error_node": false,
+      "default_error_attributes": null,
+      "default_inputs": [
+        {
+          "name": "a",
+          "value": 1
+        },
+        {
+          "name": "delay",
+          "value": 0
+        }
+      ],
+      "uiProps": {
+        "nodeWidth": 120,
+        "type": "internal",
+        "icon": "",
+        "comment": "",
+        "position": {
+          "x": -200,
+          "y": 25
+        },
+        "moreHandles": false,
+        "withImage": true,
+        "withLabel": true,
+        "colorBorder": ""
+      }
+    },
+    {
+      "id": "task3",
+      "label": "ewokscore.tests.examples.tasks.sumtask.SumTask",
+      "task_type": "class",
+      "task_identifier": "ewokscore.tests.examples.tasks.sumtask.SumTask",
+      "inputs_complete": false,
+      "task_generator": null,
+      "default_error_node": false,
+      "default_error_attributes": null,
+      "default_inputs": [
+        {
+          "name": "b",
+          "value": 3
+        },
+        {
+          "name": "delay",
+          "value": 0
+        }
+      ],
+      "uiProps": {
+        "nodeWidth": 120,
+        "type": "internal",
+        "icon": "",
+        "comment": "",
+        "position": {
+          "x": 85,
+          "y": 25
+        },
+        "moreHandles": false,
+        "withImage": true,
+        "withLabel": true,
+        "colorBorder": ""
+      }
+    },
+    {
+      "id": "task6",
+      "label": "ewokscore.tests.examples.tasks.sumtask.SumTask",
+      "task_type": "class",
+      "task_identifier": "ewokscore.tests.examples.tasks.sumtask.SumTask",
+      "inputs_complete": false,
+      "task_generator": null,
+      "default_error_node": false,
+      "default_error_attributes": null,
+      "default_inputs": [
+        {
+          "name": "b",
+          "value": 6
+        },
+        {
+          "name": "delay",
+          "value": 0
+        }
+      ],
+      "uiProps": {
+        "nodeWidth": 120,
+        "type": "internal",
+        "icon": "",
+        "comment": "",
+        "position": {
+          "x": 610,
+          "y": 100
+        },
+        "moreHandles": false,
+        "withImage": true,
+        "withLabel": true,
+        "colorBorder": ""
+      }
+    },
+    {
+      "id": "task5",
+      "label": "ewokscore.tests.examples.tasks.sumtask.SumTask",
+      "task_type": "class",
+      "task_identifier": "ewokscore.tests.examples.tasks.sumtask.SumTask",
+      "inputs_complete": false,
+      "task_generator": null,
+      "default_error_node": false,
+      "default_error_attributes": null,
+      "default_inputs": [
+        {
+          "name": "b",
+          "value": 5
+        },
+        {
+          "name": "delay",
+          "value": 0
+        }
+      ],
+      "uiProps": {
+        "nodeWidth": 120,
+        "type": "internal",
+        "icon": "",
+        "comment": "",
+        "position": {
+          "x": 355,
+          "y": 100
+        },
+        "moreHandles": false,
+        "withImage": true,
+        "withLabel": true,
+        "colorBorder": ""
+      }
+    },
+    {
+      "id": "task0",
+      "label": "ewokscore.tests.examples.tasks.sumlist.SumList",
+      "task_type": "class",
+      "task_identifier": "ewokscore.tests.examples.tasks.sumlist.SumList",
+      "inputs_complete": false,
+      "task_generator": null,
+      "default_error_node": false,
+      "default_error_attributes": null,
+      "default_inputs": [
+        {
+          "name": "list",
+          "value": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "name": "delay",
+          "value": 0
+        }
+      ],
+      "uiProps": {
+        "nodeWidth": 120,
+        "type": "internal",
+        "icon": "",
+        "comment": "",
+        "position": {
+          "x": -470,
+          "y": 25
+        },
+        "moreHandles": false,
+        "withImage": true,
+        "withLabel": true,
+        "colorBorder": ""
+      }
+    },
+    {
+      "id": "task4",
+      "label": "ewokscore.tests.examples.tasks.sumtask.SumTask",
+      "task_type": "class",
+      "task_identifier": "ewokscore.tests.examples.tasks.sumtask.SumTask",
+      "inputs_complete": false,
+      "task_generator": null,
+      "default_error_node": false,
+      "default_error_attributes": null,
+      "default_inputs": [
+        {
+          "name": "b",
+          "value": 4
+        },
+        {
+          "name": "delay",
+          "value": 0
+        }
+      ],
+      "uiProps": {
+        "nodeWidth": 120,
+        "type": "internal",
+        "icon": "",
+        "comment": "",
+        "position": {
+          "x": 85,
+          "y": 250
+        },
+        "moreHandles": false,
+        "withImage": true,
+        "withLabel": true,
+        "colorBorder": ""
+      }
+    },
+    {
+      "id": "task2",
+      "label": "ewokscore.tests.examples.tasks.sumtask.SumTask",
+      "task_type": "class",
+      "task_identifier": "ewokscore.tests.examples.tasks.sumtask.SumTask",
+      "inputs_complete": false,
+      "task_generator": null,
+      "default_error_node": false,
+      "default_error_attributes": null,
+      "default_inputs": [
+        {
+          "name": "a",
+          "value": 2
+        },
+        {
+          "name": "delay",
+          "value": 0
+        }
+      ],
+      "uiProps": {
+        "nodeWidth": 120,
+        "type": "internal",
+        "icon": "",
+        "comment": "",
+        "position": {
+          "x": -215,
+          "y": 250
+        },
+        "moreHandles": false,
+        "withImage": true,
+        "withLabel": true,
+        "colorBorder": ""
+      }
+    }
+  ],
+  "links": [
+    {
+      "source": "task0",
+      "target": "task1",
+      "data_mapping": [
+        {
+          "source_output": "sum",
+          "target_input": "a"
+        }
+      ],
+      "conditions": [],
+      "on_error": false,
+      "sub_target": null,
+      "sub_source": null,
+      "map_all_data": false,
+      "uiProps": {
+        "label": "sum->a",
+        "comment": "",
+        "type": "",
+        "markerEnd": {
+          "type": "arrow"
+        },
+        "labelBgStyle": {
+          "fill": "rgb(223, 226, 247)",
+          "fillOpacity": 1,
+          "strokeWidth": 3,
+          "stroke": "rgb(60, 81, 202)"
+        },
+        "labelStyle": {
+          "color": "rgb(60, 81, 202)",
+          "fill": "rgb(60, 81, 202)",
+          "fontWeight": 500,
+          "fontSize": 14
+        },
+        "style": {
+          "stroke": "#96a5f9",
+          "strokeWidth": "3"
+        },
+        "animated": false,
+        "sourceHandle": "",
+        "targetHandle": "",
+        "getAroundProps": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    {
+      "source": "task1",
+      "target": "task3",
+      "data_mapping": [
+        {
+          "source_output": "result",
+          "target_input": "a"
+        }
+      ],
+      "conditions": [],
+      "on_error": false,
+      "sub_target": null,
+      "sub_source": null,
+      "map_all_data": false,
+      "uiProps": {
+        "label": "result->a",
+        "comment": "",
+        "type": "",
+        "markerEnd": {
+          "type": "arrow"
+        },
+        "labelBgStyle": {
+          "fill": "rgb(223, 226, 247)",
+          "fillOpacity": 1,
+          "strokeWidth": 3,
+          "stroke": "rgb(60, 81, 202)"
+        },
+        "labelStyle": {
+          "color": "rgb(60, 81, 202)",
+          "fill": "rgb(60, 81, 202)",
+          "fontWeight": 500,
+          "fontSize": 14
+        },
+        "style": {
+          "stroke": "#96a5f9",
+          "strokeWidth": "3"
+        },
+        "animated": false,
+        "sourceHandle": "",
+        "targetHandle": "",
+        "getAroundProps": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    {
+      "source": "task2",
+      "target": "task4",
+      "data_mapping": [
+        {
+          "source_output": "result",
+          "target_input": "a"
+        }
+      ],
+      "conditions": [],
+      "on_error": false,
+      "sub_target": null,
+      "sub_source": null,
+      "map_all_data": false,
+      "uiProps": {
+        "label": "result->a",
+        "comment": "",
+        "type": "",
+        "markerEnd": {
+          "type": "arrow"
+        },
+        "labelBgStyle": {
+          "fill": "rgb(223, 226, 247)",
+          "fillOpacity": 1,
+          "strokeWidth": 3,
+          "stroke": "rgb(60, 81, 202)"
+        },
+        "labelStyle": {
+          "color": "rgb(60, 81, 202)",
+          "fill": "rgb(60, 81, 202)",
+          "fontWeight": 500,
+          "fontSize": 14
+        },
+        "style": {
+          "stroke": "#96a5f9",
+          "strokeWidth": "3"
+        },
+        "animated": false,
+        "sourceHandle": "",
+        "targetHandle": "",
+        "getAroundProps": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    {
+      "source": "task3",
+      "target": "task5",
+      "data_mapping": [
+        {
+          "source_output": "result",
+          "target_input": "a"
+        }
+      ],
+      "conditions": [],
+      "on_error": false,
+      "sub_target": null,
+      "sub_source": null,
+      "map_all_data": false,
+      "uiProps": {
+        "label": "result->a",
+        "comment": "",
+        "type": "",
+        "markerEnd": {
+          "type": "arrow"
+        },
+        "labelBgStyle": {
+          "fill": "rgb(223, 226, 247)",
+          "fillOpacity": 1,
+          "strokeWidth": 3,
+          "stroke": "rgb(60, 81, 202)"
+        },
+        "labelStyle": {
+          "color": "rgb(60, 81, 202)",
+          "fill": "rgb(60, 81, 202)",
+          "fontWeight": 500,
+          "fontSize": 14
+        },
+        "style": {
+          "stroke": "#96a5f9",
+          "strokeWidth": "3"
+        },
+        "animated": false,
+        "sourceHandle": "",
+        "targetHandle": "",
+        "getAroundProps": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    {
+      "source": "task4",
+      "target": "task5",
+      "data_mapping": [
+        {
+          "source_output": "result",
+          "target_input": "b"
+        }
+      ],
+      "conditions": [],
+      "on_error": false,
+      "sub_target": null,
+      "sub_source": null,
+      "map_all_data": false,
+      "uiProps": {
+        "label": "result->b",
+        "comment": "",
+        "type": "",
+        "markerEnd": {
+          "type": "arrow"
+        },
+        "labelBgStyle": {
+          "fill": "rgb(223, 226, 247)",
+          "fillOpacity": 1,
+          "strokeWidth": 3,
+          "stroke": "rgb(60, 81, 202)"
+        },
+        "labelStyle": {
+          "color": "rgb(60, 81, 202)",
+          "fill": "rgb(60, 81, 202)",
+          "fontWeight": 500,
+          "fontSize": 14
+        },
+        "style": {
+          "stroke": "#96a5f9",
+          "strokeWidth": "3"
+        },
+        "animated": false,
+        "sourceHandle": "",
+        "targetHandle": "",
+        "getAroundProps": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    {
+      "source": "task5",
+      "target": "task6",
+      "data_mapping": [
+        {
+          "source_output": "result",
+          "target_input": "a"
+        }
+      ],
+      "conditions": [],
+      "on_error": false,
+      "sub_target": null,
+      "sub_source": null,
+      "map_all_data": false,
+      "uiProps": {
+        "label": "result->a",
+        "comment": "",
+        "type": "",
+        "markerEnd": {
+          "type": "arrow"
+        },
+        "labelBgStyle": {
+          "fill": "rgb(223, 226, 247)",
+          "fillOpacity": 1,
+          "strokeWidth": 3,
+          "stroke": "rgb(60, 81, 202)"
+        },
+        "labelStyle": {
+          "color": "rgb(60, 81, 202)",
+          "fill": "rgb(60, 81, 202)",
+          "fontWeight": 500,
+          "fontSize": 14
+        },
+        "style": {
+          "stroke": "#96a5f9",
+          "strokeWidth": "3"
+        },
+        "animated": false,
+        "sourceHandle": "",
+        "targetHandle": "",
+        "getAroundProps": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    }
+  ]
+}
