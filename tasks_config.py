@@ -71,26 +71,12 @@ class OpenIntegrateSave(Task, input_names=["path_to_find", "chunk_range", "patte
         #     monitor_name=None,
         # )
 
-
         ai = load(config)
-        # ai = AzimuthalIntegrator(
-        #     dist=config["dist"],
-        #     poni1=config["poni1"],
-        #     poni2=config["poni2"],
-        #     rot1=config["rot1"],
-        #     rot2=config["rot2"],
-        #     rot3=config["rot3"],
-        #     wavelength=config["wavelength"],
-        #     detector=detector_factory(name=config["detector"], config=config["detector_config"]),
-        # )
-        return
 
-        # if config["do_mask"]:
-        #     mask = read_data(config["mask_file"])
-        # else:
-        #     mask = None
-
-        mask = None
+        if config["do_mask"]:
+            mask = read_data(config["mask_file"])
+        else:
+            mask = None
 
         if config["do_dark"]:
             dark = read_data(config["dark_current"])
@@ -118,7 +104,6 @@ class OpenIntegrateSave(Task, input_names=["path_to_find", "chunk_range", "patte
             polarization_factor = None
 
         for filename in list_filenames:
-            return
             res = ai.integrate1d(
                 data=read_data(filename),
                 npt=config["nbpt_rad"],
