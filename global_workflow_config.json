@@ -1,0 +1,80 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {
+    "id": "subgraph",
+    "schema_version": "1.0"
+  },
+  "nodes": [
+    {
+      "task_type": "class",
+      "task_identifier": "tasks_config.SplitList",
+      "default_inputs": [
+        {
+          "name": "nfiles",
+          "value": 100
+        },
+        {
+          "name": "chunk_size",
+          "value": 100.0
+        }
+      ],
+      "id": "node_split"
+    },
+    {
+      "task_type": "class",
+      "task_identifier": "tasks_config.ExecuteSubWorkflow",
+      "default_inputs": [
+        {
+          "name": "path_to_find",
+          "value": "/users/edgar1993a/work/ewoks_parallel/edf_data"
+        },
+        {
+          "name": "pattern",
+          "value": "*.edf"
+        },
+        {
+          "name": "config",
+          "value": "ewoks_config.json"
+        }
+      ],
+      "id": "node_subworkflow"
+    }
+  ],
+  "links": [
+    {
+      "data_mapping": [
+        {
+          "source_output": "chunk_range",
+          "target_input": "chunk_range"
+        }
+      ],
+      "source": "node_split",
+      "target": "node_subworkflow"
+    },
+    {
+      "data_mapping": [
+        {
+          "source_output": "nfiles",
+          "target_input": "nfiles"
+        },
+        {
+          "source_output": "chunk_size",
+          "target_input": "chunk_size"
+        },
+        {
+          "source_output": "index",
+          "target_input": "index"
+        }
+      ],
+      "conditions": [
+        {
+          "source_output": "repeat",
+          "value": true
+        }
+      ],
+      "source": "node_split",
+      "target": "node_split"
+    }
+  ]
+}

@@ -2,40 +2,35 @@
   "directed": true,
   "multigraph": false,
   "graph": {
-    "id": "graph_god",
+    "id": "subgraph",
     "schema_version": "1.0"
   },
   "nodes": [
     {
       "task_type": "class",
-      "task_identifier": "tasks_config.ExecuteGlobalWorkflow",
+      "task_identifier": "tasks_config.OpenIntegrateSave",
       "default_inputs": [
         {
           "name": "path_to_find",
           "value": "/users/edgar1993a/work/ewoks_parallel/edf_data"
         },
         {
+          "name": "chunk_range",
+          "value": [
+            0.0,
+            100.0
+          ]
+        },
+        {
           "name": "pattern",
           "value": "*.edf"
         },
         {
-          "name": "nfiles",
-          "value": 100
-        },
-        {
-          "name": "chunk_size",
-          "value": 100.0
-        },
-        {
           "name": "config",
           "value": "ewoks_config.json"
-        },
-        {
-          "name": "slurm",
-          "value": false
         }
       ],
-      "id": "node_god"
+      "id": "node_openintegratesave"
     }
   ],
   "links": []

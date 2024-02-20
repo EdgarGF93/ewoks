@@ -8,6 +8,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
+#from pyFAI.app.integrate import process
+#from pyFAI.worker import Worker
+from pyFAI.io import DefaultAiWriter
+import json
+
 class OpenAI(
     Task,
     input_names=["filename_list", "poni", "npt", "method"],
@@ -26,6 +31,17 @@ class OpenIntegrateSave(
      input_names=["ai", "filename_list", "npt", "method"],
 ):
      def run(self):
+        # with open("ewoks_config.json") as fp:
+        #     config = json.load(fp)
+        # process(
+        #       input_data=self.inputs.filename_list,
+        #       config=config,
+        #       output=None,
+        #       monitor_name=None,
+        #       observer=None,
+        #   )
+          
+          
           for filename in self.inputs.filename_list:
                data = fabio.open(filename).data
                filename_out = filename.replace(".edf", "_1d.dat")
