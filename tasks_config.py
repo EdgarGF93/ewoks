@@ -72,10 +72,12 @@ class OpenIntegrateSave(Task, input_names=["path_to_find", "chunk_range", "patte
 
         ai = load(self.inputs.config)
 
-        if config["do_mask"]:
-            mask = read_data(config["mask_file"])
-        else:
-            mask = None
+        # if config["do_mask"]:
+        #     mask = read_data(config["mask_file"])
+        # else:
+        #     mask = None
+
+        mask = None
 
         if config["do_dark"]:
             dark = read_data(config["dark_current"])
