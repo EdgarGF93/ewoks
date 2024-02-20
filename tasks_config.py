@@ -72,7 +72,7 @@ class OpenIntegrateSave(Task, input_names=["path_to_find", "chunk_range", "patte
         # )
 
 
-        #ai = load(self.inputs.config)
+        ai = load(config)
         # ai = AzimuthalIntegrator(
         #     dist=config["dist"],
         #     poni1=config["poni1"],
