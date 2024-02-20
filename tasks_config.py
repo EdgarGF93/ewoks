@@ -225,7 +225,7 @@ class ExecuteSubWorkflowSLURM(
 
         # Now we have to submit this graph to slurm
         test_graph = get_test_graph()
-        future = submit(args=(test_graph,), kw=kwargs)
+        future = submit(args=(sub_graph,), kw=kwargs)
         result = future.get(timeout=None)
 
 def get_subworkflow(path_to_find, chunk_range, pattern, config) -> dict:
