@@ -71,6 +71,7 @@ class OpenIntegrateSave(Task, input_names=["path_to_find", "chunk_range", "patte
 
 
         ai = load(self.inputs.config)
+        return
 
         # if config["do_mask"]:
         #     mask = read_data(config["mask_file"])
