@@ -17,7 +17,7 @@ def benchmark_execution(
     #     chunks = np.linspace(int(nfiles / 20), int(nfiles), 20)
     # else:
     #     chunks = np.linspace(int(nfiles / 10), int(nfiles), 10)
-    chunks = [50,80,100,200,300,500,1000]
+    chunks = [20,50,60,80,100,150,200,300,500,1000]
     #chunks = [20,25,30,35,40,45,50,55,60]
     y = []
 
@@ -36,7 +36,7 @@ def benchmark_execution(
         y.append(ft)
 
         # remove files
-        for file_dat in Path(path_to_find).glob("p1m_*.dat"):
+        for file_dat in Path(path_to_find).glob("eiger_*.dat"):
             file_dat.unlink()    
 
     plt.plot(chunks, np.array(y), marker='o', ls='--')
@@ -59,12 +59,12 @@ if __name__ == "__main__":
 
     PATH_DATA_INHOUSE = "/data/bm28/inhouse/Edgar/data_ewoks/EIGER"
     PATTERN = "*.edf"
-    NFILES = 500
+    NFILES = 100
     CHUNK_SIZE = 100
-    CONFIG = "p1m_config.json"
+    CONFIG = "eiger_config_cython.json"
     #CONFIG = "ewoks_config_cython_unix.json"
-    SLURM = False
-    BENCHMARK = True
+    SLURM = True
+    BENCHMARK = False
 
     if BENCHMARK:
         benchmark_execution(
