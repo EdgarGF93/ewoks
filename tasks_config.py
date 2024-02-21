@@ -217,7 +217,7 @@ class ExecuteSubWorkflowSLURM(
                 "job_resources" : {
                     # "nodes" : "nodes",
                     # "allocated_nodes" : [ "", "" ],
-                    "allocated_cpus" : 16,
+                    "allocated_cpus" : 4,
                     # "allocated_hosts" : 9,
                     # "allocated_cores" : 2
                     },
