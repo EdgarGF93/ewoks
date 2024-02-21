@@ -17,8 +17,8 @@ def benchmark_execution(
     #     chunks = np.linspace(int(nfiles / 20), int(nfiles), 20)
     # else:
     #     chunks = np.linspace(int(nfiles / 10), int(nfiles), 10)
-    chunks = [20,50,60,80,100,150,200,300,500,1000]
-    #chunks = [20,25,30,35,40,45,50,55,60]
+    #chunks = [20,50,60,80,100,150,200,300,500,1000]
+    chunks = [10,20,30,40,50,60,70,80,90,100,200]
     y = []
 
     for chunk_size in chunks:
@@ -46,7 +46,7 @@ def benchmark_execution(
         config_dict = json.load(fp)
     plt.title(str(config_dict["method"]))
     if slurm:
-        title = f"benchmark_chunks_{str(str(config_dict['method']))}_{str(nfiles)}_slurm.png"
+        title = f"benchmark_chunks_{str(str(config_dict['method']))}_{str(nfiles)}_slurm_3workers.png"
     else:
         title = f"benchmark_chunks_{str(str(config_dict['method']))}_{str(nfiles)}_local.png"
     plt.savefig(title)
@@ -59,12 +59,12 @@ if __name__ == "__main__":
 
     PATH_DATA_INHOUSE = "/data/bm28/inhouse/Edgar/data_ewoks/EIGER"
     PATTERN = "*.edf"
-    NFILES = 100
+    NFILES = 1000
     CHUNK_SIZE = 100
     CONFIG = "eiger_config_cython.json"
     #CONFIG = "ewoks_config_cython_unix.json"
     SLURM = True
-    BENCHMARK = False
+    BENCHMARK = True
 
     if BENCHMARK:
         benchmark_execution(
