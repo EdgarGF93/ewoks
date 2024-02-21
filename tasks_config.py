@@ -8,7 +8,6 @@ from itertools import islice
 import json
 from ewoksjob.client import submit
 from pyFAI.io.image import read_data
-from test_slurm import get_test_graph
 
 def generate_workflow_dummy(execute=True):
     node_dummy = {"id" : "node_dummy", "task_type" : "class", "task_identifier" : "tasks_config.Write"}
@@ -215,13 +214,19 @@ class ExecuteSubWorkflowSLURM(
             "pre_script": "module load pyfai/2024.2",
             "parameters": {
                 "time_limit": 360,
+                "job_resources" : {
+                    # "nodes" : "nodes",
+                    # "allocated_nodes" : [ "", "" ],
+                    # "allocated_cpus" : 7,
+                    # "allocated_hosts" : 9,
+                    # "allocated_cores" : 2
+                    },
                 # "minimum_cpus_per_node" : 14,
             },
         }
 
 
         # Now we have to submit this graph to slurm
-        test_graph = get_test_graph()
         future = submit(args=(sub_graph,), kw=kwargs)
         result = future.get(timeout=None)
 

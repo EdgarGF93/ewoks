@@ -13,7 +13,10 @@ def benchmark_execution(
     config,
     slurm,
 ):
-    chunks = np.linspace(int(nfiles / 10), int(nfiles), 10)
+    if slurm:
+        chunks = np.linspace(int(nfiles / 20), int(nfiles), 20)
+    else:
+        chunks = np.linspace(int(nfiles / 10), int(nfiles), 10)
     y = []
 
     for chunk_size in chunks:
@@ -54,11 +57,11 @@ if __name__ == "__main__":
     PATH_DATA_INHOUSE = "/data/bm28/inhouse/Edgar/data_ewoks/P1M"
     PATTERN = "*.edf"
     NFILES = 100
-    CHUNK_SIZE = 100
+    CHUNK_SIZE = 30
     CONFIG = "p1m_config_cython.json"
     #CONFIG = "ewoks_config_cython_unix.json"
     SLURM = True
-    BENCHMARK = True
+    BENCHMARK = False
 
     if BENCHMARK:
         benchmark_execution(
