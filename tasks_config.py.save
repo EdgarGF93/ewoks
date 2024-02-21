@@ -5,9 +5,15 @@ import os
 from pyFAI import load
 from pathlib import Path
 from itertools import islice
+import numpy as np
+import time
 import json
+import matplotlib.pyplot as plt
 from ewoksjob.client import submit
+#from pyFAI.app.integrate import process
 from pyFAI.io.image import read_data
+from pyFAI import detector_factory
+from pyFAI.azimuthalIntegrator import AzimuthalIntegrator
 from test_slurm import get_test_graph
 
 def generate_workflow_dummy(execute=True):
@@ -57,7 +63,6 @@ class OpenIntegrateSave(Task, input_names=["path_to_find", "chunk_range", "patte
             config = json.load(fp)
 
         # WE CANNOT USE THE WORKER FOR OPENCL IMPLEMENTATION !
-        # POSIBLY ISSUE WITH SPAWN/FORK MULTIPROCESSING
         # process(
         #     input_data=list_filenames,
         #     output=None,
@@ -221,6 +226,7 @@ class ExecuteSubWorkflowSLURM(
 
 
         # Now we have to submit this graph to slurm
+        ppru
         test_graph = get_test_graph()
         future = submit(args=(sub_graph,), kw=kwargs)
         result = future.get(timeout=None)
@@ -328,4 +334,81 @@ def execute_god_workflow(path_to_find, pattern, nfiles, chunk_size, config, slur
     graph_god = {"graph" : {"id" : "graph_god"}, "nodes" : [node_god], "links" : []}
     # convert_graph(graph_god, "god_workflow.json")
 
+    # if execute_slurm:
+    #     activate_slurm_env()
+
     execute_graph(graph=graph_god, engine="dask")
+
+def benchmark_execution(
+    path_to_find,
+    pattern,
+    nfiles,
+    config,
+    slurm,
+):
+    chunks = np.linspace(int(nfiles / 10), int(nfiles), 10)
+    y = []
+    os.system("rm edf_data/*.dat")
+    for chunk_size in chunks:
+        st = time.perf_counter()
+
+        execute_god_workflow(
+            path_to_find=path_to_find,
+            pattern=pattern,
+            nfiles = nfiles,
+            chunk_size=chunk_size,
+            config=config,
+            slurm=slurm,
+        )
+
+        ft = time.perf_counter() - st
+        y.append(ft)
+        os.system("rm /home/esrf/edgar1993a/work/ewoks/edf_data/*.dat")
+    plt.plot(chunks, np.array(y), marker='o', ls='--')
+    plt.xlabel("Chunk size")
+    plt.ylabel(f"Time to integrate {str(int(nfiles))} frames")
+    with open(config) as fp:
+        config_dict = json.load(fp)
+    plt.title(str(config_dict["method"]))
+    # plt.savefig(f"benchmark_chunks_{str(str(config_dict["method"]))}_{str(nfiles)}.png")
+    plt.close()
+
+if __name__ == "__main__":
+    PATH_UNIX = "/home/esrf/edgar1993a/work/ewoks/edf_data"
+    PATH_LOCAL = "/users/edgar1993a/work/ewoks_parallel/edf_data"
+    PATTERN = "*.edf"
+
+    NFILES = 10
+    CHUNK_SIZE = 110
+    CONFIG = "ewoks_config_cython_unix.json"
+
+    st = time.perf_counter()
+    execute_god_workflow(
+        path_to_find=PATH_UNIX,
+        pattern=PATTERN,
+        nfiles = NFILES,
+        chunk_size=CHUNK_SIZE,
+        config=CONFIG,
+        slurm=True,
+    )
+    ft = time.perf_counter() - st
+
+    print(ft)
+
+
+    # benchmark_execution(
+    #     path_to_find=PATH_UNIX,
+    #     pattern=PATTERN,
+    #     nfiles=NFILES,
+    #     config=CONFIG,
+    #     slurm=True,
+    # )
+
+    # x = np.array([20, 35, 65, 100, 150])
+    # y = np.array([46, 34, 18.8, 28, 33.23])
+    # plt.plot(x, y, marker='o', ls='--')
+    # plt.xlabel("Chunk size")
+    # plt.ylabel(f"Time to integrate 1000 frames")
+    # plt.title("bbox_csr_cython")
+    # plt.savefig(f"benchmark_chunks_bbox_csr_cython_1000_SLURM.png")
+    # plt.close()
