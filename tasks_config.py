@@ -8,6 +8,7 @@ from itertools import islice
 import json
 from ewoksjob.client import submit
 from pyFAI.io.image import read_data
+import pyslurmutils
 
 def generate_workflow_dummy(execute=True):
     node_dummy = {"id" : "node_dummy", "task_type" : "class", "task_identifier" : "tasks_config.Write"}
@@ -150,31 +151,31 @@ class SplitList(
         self.outputs.index = index + 1
 
 
-class ExecuteGlobalWorkflow(
-    Task,
-    input_names=[
-        "path_to_find", 
-        "pattern", 
-        "nfiles", 
-        "chunk_size", 
-        "config", 
-        "slurm"],
-):
-    def run(self):
-        # Execute the global workflow using PPF engine
-        global_graph = get_global_workflow(
-            path_to_find=self.inputs.path_to_find,
-            pattern=self.inputs.pattern,
-            nfiles=self.inputs.nfiles,
-            chunk_size=self.inputs.chunk_size,
-            config=self.inputs.config,
-            slurm=self.inputs.slurm,
-        )
+# class ExecuteGlobalWorkflow(
+#     Task,
+#     input_names=[
+#         "path_to_find", 
+#         "pattern", 
+#         "nfiles", 
+#         "chunk_size", 
+#         "config", 
+#         "slurm"],
+# ):
+#     def run(self):
+#         # Execute the global workflow using PPF engine
+#         global_graph = get_global_workflow(
+#             path_to_find=self.inputs.path_to_find,
+#             pattern=self.inputs.pattern,
+#             nfiles=self.inputs.nfiles,
+#             chunk_size=self.inputs.chunk_size,
+#             config=self.inputs.config,
+#             slurm=self.inputs.slurm,
+#         )
 
-        execute_graph(
-            graph=global_graph,
-            engine="ppf",
-        )
+#         execute_graph(
+#             graph=global_graph,
+#             engine="ppf",
+#         )
 
 class ExecuteSubWorkflow(
     Task,
@@ -214,21 +215,14 @@ class ExecuteSubWorkflowSLURM(
             "pre_script": "module load pyfai/2024.2",
             "parameters": {
                 "time_limit": 360,
-                "job_resources" : {
-                    # "nodes" : "nodes",
-                    # "allocated_nodes" : [ "", "" ],
-                    "allocated_cpus" : 4,
-                    # "allocated_hosts" : 9,
-                    # "allocated_cores" : 2
-                    },
-                # "minimum_cpus_per_node" : 14,
             },
         }
 
-
+        # convert_graph(sub_graph, name_graph)
         # Now we have to submit this graph to slurm
         future = submit(args=(sub_graph,), kw=kwargs)
-        result = future.get(timeout=None)
+        future.get(timeout=None)
+
 
 def get_subworkflow(path_to_find, chunk_range, pattern, config) -> dict:
 
@@ -316,21 +310,34 @@ def get_global_workflow(path_to_find, pattern, nfiles, chunk_size, config, slurm
     # convert_graph(graph, "global_workflow_config.json")
     return graph
 
-def execute_god_workflow(path_to_find, pattern, nfiles, chunk_size, config, slurm=True) -> None:
+# def execute_god_workflow(path_to_find, pattern, nfiles, chunk_size, config, slurm=True) -> None:
 
-    node_god = {
-        "id" : "node_god", 
-        "task_type" : "class", 
-        "task_identifier" : "tasks_config.ExecuteGlobalWorkflow",
-        "default_inputs" : [{"name" : "path_to_find", "value" : path_to_find},
-                            {"name" : "pattern", "value" : pattern},
-                            {"name" : "nfiles", "value" : nfiles},
-                            {"name" : "chunk_size", "value" : chunk_size},                            
-                            {"name" : "config", "value" : config},
-                            {"name" : "slurm", "value" : slurm},
-                            ]
-    }
-    graph_god = {"graph" : {"id" : "graph_god"}, "nodes" : [node_god], "links" : []}
-    # convert_graph(graph_god, "god_workflow.json")
+#     node_god = {
+#         "id" : "node_god", 
+#         "task_type" : "class", 
+#         "task_identifier" : "tasks_config.ExecuteGlobalWorkflow",
+#         "default_inputs" : [{"name" : "path_to_find", "value" : path_to_find},
+#                             {"name" : "pattern", "value" : pattern},
+#                             {"name" : "nfiles", "value" : nfiles},
+#                             {"name" : "chunk_size", "value" : chunk_size},                            
+#                             {"name" : "config", "value" : config},
+#                             {"name" : "slurm", "value" : slurm},
+#                             ]
+#     }
+#     graph_god = {"graph" : {"id" : "graph_god"}, "nodes" : [node_god], "links" : []}
+#     # convert_graph(graph_god, "god_workflow.json")
 
-    execute_graph(graph=graph_god, engine="dask")
+#     execute_graph(graph=graph_god, engine="dask")
+
+def execute_global_workflow(path_to_find, pattern, nfiles, chunk_size, config, slurm=True) -> None:
+
+    global_workflow = get_global_workflow(
+        path_to_find=path_to_find,
+        pattern=pattern,
+        nfiles=nfiles,
+        chunk_size=chunk_size,
+        config=config,
+        slurm=slurm,
+    )
+
+    execute_graph(graph=global_workflow, engine="ppf")

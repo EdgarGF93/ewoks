@@ -1,0 +1,24 @@
+# Nota: C-Order, 1 refers to the Y axis, 2 to the X axis
+# Calibration done at Wed Feb 21 15:19:54 2024
+poni_version: 2.1
+Detector: Eiger2_4M
+Detector_config: {"orientation": 3}
+Distance: 0.1
+Poni1: 0.05
+Poni2: 0.05
+Rot1: 0
+Rot2: 0
+Rot3: 0
+Wavelength: 1e-10
+# Nota: C-Order, 1 refers to the Y axis, 2 to the X axis
+# Calibration done at Wed Feb 21 15:21:03 2024
+poni_version: 2.1
+Detector: Eiger2_4M
+Detector_config: {"orientation": 3}
+Distance: 0.1
+Poni1: 0.05
+Poni2: 0.05
+Rot1: 0
+Rot2: 0
+Rot3: 0
+Wavelength: 1e-10
