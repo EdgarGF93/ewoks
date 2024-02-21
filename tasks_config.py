@@ -333,9 +333,6 @@ def execute_god_workflow(path_to_find, pattern, nfiles, chunk_size, config, slur
     graph_god = {"graph" : {"id" : "graph_god"}, "nodes" : [node_god], "links" : []}
     # convert_graph(graph_god, "god_workflow.json")
 
-    # if execute_slurm:
-    #     activate_slurm_env()
-
     execute_graph(graph=graph_god, engine="dask")
 
 def benchmark_execution(
@@ -387,14 +384,13 @@ if __name__ == "__main__":
     PATTERN = "*.edf"
     NFILES = 10
     CHUNK_SIZE = 10
-    #CONFIG = "p1m_config_cython.json"
-    CONFIG = "ewoks_config_cython_unix.json"
-    SLURM = True
+    CONFIG = "p1m_config.json"
+    #CONFIG = "ewoks_config_cython_unix.json"
+    SLURM = False
     BENCHMARK = False
 
-
     execute_god_workflow(
-        path_to_find=PATH_UNIX,
+        path_to_find=PATH_DATA_INHOUSE,
         pattern=PATTERN,
         nfiles = NFILES,
         chunk_size=CHUNK_SIZE,
