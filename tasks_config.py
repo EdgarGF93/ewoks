@@ -12,8 +12,8 @@ import matplotlib.pyplot as plt
 from ewoksjob.client import submit
 #from pyFAI.app.integrate import process
 from pyFAI.io.image import read_data
-from pyFAI import detector_factory
-from pyFAI.azimuthalIntegrator import AzimuthalIntegrator
+# from pyFAI import detector_factory
+# from pyFAI.azimuthalIntegrator import AzimuthalIntegrator
 from test_slurm import get_test_graph
 
 def generate_workflow_dummy(execute=True):
@@ -382,38 +382,30 @@ if __name__ == "__main__":
 
     PATH_DATA_INHOUSE = "/data/bm28/inhouse/Edgar/data_ewoks/P1M"
     PATTERN = "*.edf"
-    NFILES = 10
-    CHUNK_SIZE = 10
+    NFILES = 1000
+    CHUNK_SIZE = 300
     CONFIG = "p1m_config.json"
     #CONFIG = "ewoks_config_cython_unix.json"
     SLURM = False
     BENCHMARK = False
 
-    execute_god_workflow(
-        path_to_find=PATH_DATA_INHOUSE,
-        pattern=PATTERN,
-        nfiles = NFILES,
-        chunk_size=CHUNK_SIZE,
-        config=CONFIG,
-        slurm=SLURM,
-    )
-    # if BENCHMARK:
-    #     benchmark_execution(
-    #         path_to_find=PATH_DATA_INHOUSE,
-    #         pattern=PATTERN,
-    #         nfiles=NFILES,
-    #         config=CONFIG,
-    #         slurm=SLURM,
-    #     )
-    # else:
-    #     st = time.perf_counter()
-    #     execute_god_workflow(
-    #         path_to_find=PATH_DATA_INHOUSE,
-    #         pattern=PATTERN,
-    #         nfiles = NFILES,
-    #         chunk_size=CHUNK_SIZE,
-    #         config=CONFIG,
-    #         slurm=SLURM,
-    #     )
-    #     ft = time.perf_counter() - st
-    #     print(ft)
+    if BENCHMARK:
+        benchmark_execution(
+            path_to_find=PATH_DATA_INHOUSE,
+            pattern=PATTERN,
+            nfiles=NFILES,
+            config=CONFIG,
+            slurm=SLURM,
+        )
+    else:
+        st = time.perf_counter()
+        execute_god_workflow(
+            path_to_find=PATH_DATA_INHOUSE,
+            pattern=PATTERN,
+            nfiles = NFILES,
+            chunk_size=CHUNK_SIZE,
+            config=CONFIG,
+            slurm=SLURM,
+        )
+        ft = time.perf_counter() - st
+        print(ft)
