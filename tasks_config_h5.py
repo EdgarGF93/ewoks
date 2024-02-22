@@ -78,6 +78,7 @@ class OpenIntegrateSave(Task, input_names=["h5_file", "scan_number", "detector_n
 
         # Read
         with h5py_utils.open_item(h5_file, "/", mode="a") as f:
+            pyfai_group = f[scan_number].create_group(f"pyFAI_integration_chunk_{str(chunk_range)}")
             dataset_chunk = f[scan_number]["measurement"][detector_name][chunk_range[0]:chunk_range[1]]
             for data in dataset_chunk:
                 res = ai.integrate1d(
