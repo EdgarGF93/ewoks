@@ -78,7 +78,7 @@ class OpenIntegrateSave(Task, input_names=["h5_file", "scan_number", "detector_n
 
         # Read
         with h5py_utils.open_item(h5_file, "/", mode="a") as f:
-            pyfai_group = f[scan_number].create_group(f"pyFAI_integration_chunk_{str(chunk_range)}_aj")
+            pyfai_group = f[scan_number].create_group(f"pyFAI_integration_chunk_{str(chunk_range)}_addj")
             results = []
 
             dataset_chunk = f[scan_number]["measurement"][detector_name][chunk_range[0]:chunk_range[1]]
@@ -97,7 +97,7 @@ class OpenIntegrateSave(Task, input_names=["h5_file", "scan_number", "detector_n
                     radial_range=radial_range,
                     azimuth_range=azimuth_range,
                 )
-                results.append(res)
+                results.append(res.intensity)
             data_res = np.stack(results)
             pyfai_group.create_dataset(data=data_res, name="integration")
 
