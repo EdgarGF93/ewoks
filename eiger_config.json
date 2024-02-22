@@ -13,7 +13,7 @@
         "orientation": 3
     },
     "do_mask": true,
-    "mask_file": "fabio:///mnt/multipath-shares/data/bm28/inhouse/Edgar/data_ewoks/ewoks/data/eiger_mask.edf",
+    "mask_file": "fabio:///data/bm28/inhouse/Edgar/data_ewoks/ewoks/data/eiger_mask.edf",
     "do_dark": false,
     "dark_current": null,
     "do_flat": false,
