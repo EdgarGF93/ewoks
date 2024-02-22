@@ -95,7 +95,7 @@ class OpenIntegrateSave(Task, input_names=["h5_file", "scan_number", "detector_n
                     azimuth_range=azimuth_range,
                 )
                 pyfai_group = f[scan_number].create_group("pyFAI_integration")
-                data_res = np.array(res.radial, res.intensity)
+                data_res = np.stack((res.radial, res.intensity))
                 pyfai_group.create_dataset(data=data_res, name="integration")
                
 class SplitList(
