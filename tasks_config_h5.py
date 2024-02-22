@@ -10,6 +10,7 @@ from ewoksjob.client import submit
 from pyFAI.io.image import read_data
 import pyslurmutils
 from silx.io import h5py_utils
+import numpy as np
 
 
 def generate_workflow_dummy(execute=True):
@@ -78,23 +79,24 @@ class OpenIntegrateSave(Task, input_names=["h5_file", "scan_number", "detector_n
         # Read
         with h5py_utils.open_item(h5_file, "/", mode="a") as f:
             dataset_chunk = f[scan_number]["measurement"][detector_name][chunk_range[0]:chunk_range[1]]
-            print(dataset_chunk)
-
-            # for data in dataset_chunk:
-            #     res = ai.integrate1d(
-            #         data=data,
-            #         npt=config["nbpt_rad"],
-            #         correctSolidAngle=config["do_solid_angle"],
-            #         polarization_factor=polarization_factor,
-            #         unit=config["unit"],
-            #         error_model=config["error_model"],
-            #         method=tuple(config["method"]),
-            #         mask=mask,
-            #         flat=flat,
-            #         dark=dark,
-            #         radial_range=radial_range,
-            #         azimuth_range=azimuth_range,
-            #     )
+            for data in dataset_chunk:
+                res = ai.integrate1d(
+                    data=data,
+                    npt=config["nbpt_rad"],
+                    correctSolidAngle=config["do_solid_angle"],
+                    polarization_factor=polarization_factor,
+                    unit=config["unit"],
+                    error_model=config["error_model"],
+                    method=tuple(config["method"]),
+                    mask=mask,
+                    flat=flat,
+                    dark=dark,
+                    radial_range=radial_range,
+                    azimuth_range=azimuth_range,
+                )
+                pyfai_group = f[scan_number].create_group("pyFAI_integration")
+                data_res = np.array(res.radial, res.intensity)
+                pyfai_group.create_dataset(data=data_res, name="integration")
                
 class SplitList(
     Task,

@@ -1,0 +1,43 @@
+{
+    "application": "pyfai-integrate",
+    "version": 3,
+    "wavelength": 1e-10,
+    "dist": 0.1,
+    "poni1": 0.05,
+    "poni2": 0.05,
+    "rot1": 0.0,
+    "rot2": 0.0,
+    "rot3": 0.0,
+    "detector": "Eiger2_9M",
+    "detector_config": {
+        "orientation": 3
+    },
+    "do_mask": false,
+    "mask_file": "",
+    "do_dark": false,
+    "dark_current": null,
+    "do_flat": false,
+    "flat_field": null,
+    "do_polarization": false,
+    "polarization_factor": 0.0,
+    "do_dummy": false,
+    "val_dummy": null,
+    "delta_dummy": null,
+    "do_2D": false,
+    "nbpt_rad": 3000,
+    "unit": "q_nm^-1",
+    "do_radial_range": false,
+    "radial_range_min": null,
+    "radial_range_max": null,
+    "do_azimuthal_range": false,
+    "azimuth_range_min": null,
+    "azimuth_range_max": null,
+    "chi_discontinuity_at_0": false,
+    "do_solid_angle": true,
+    "error_model": null,
+    "method": [
+        "bbox",
+        "csr",
+        "cython"
+    ]
+}

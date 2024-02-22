@@ -66,7 +66,7 @@ if __name__ == "__main__":
 
     NFILES = 10
     CHUNK_SIZE = 10
-    CONFIG = "eiger_config.json"
+    CONFIG = "eiger9m_config.json"
     SLURM = False
     BENCHMARK = False
 
