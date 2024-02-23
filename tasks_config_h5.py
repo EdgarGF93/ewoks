@@ -40,6 +40,12 @@ class OpenIntegrateSave(Task, input_names=["h5_file", "scan_number", "detector_n
         chunk_range = [int(_) for _ in self.inputs.chunk_range]
         detector_name = self.inputs.detector_name
 
+        import pyopencl
+        with open("kkk.txt", "w") as f:
+            f.write(str(pyopencl.create_some_context()))
+
+        return 
+     
         with open(self.inputs.config) as fp:
             config = json.load(fp)
 

@@ -128,6 +128,7 @@ class SplitList(
         "chunk_range",
         "index", 
         "repeat",
+        "trigger_compile",
         ],
 ):
     def run(self):
@@ -143,12 +144,21 @@ class SplitList(
 
         if chunk_range[0] == self.inputs.nfiles:
             self.outputs.repeat = False
+            self.outputs.trigger_compile = True
         elif chunk_range[1] >= self.inputs.nfiles:
             self.outputs.repeat = False
+            self.outputs.trigger_compile = True
         else:
             self.outputs.repeat = True
+            self.outputs.trigger_compile = False
         self.outputs.chunk_range = chunk_range
         self.outputs.index = index + 1
+
+class Compile(
+    Task,
+    input_names=["trigger_compile"],
+):
+    print("hola")
 
 
 # class ExecuteGlobalWorkflow(
@@ -258,7 +268,13 @@ def get_global_workflow(path_to_find, pattern, nfiles, chunk_size, config, slurm
              {"name" : "chunk_size", "value" : chunk_size},                             
             ]
     }
-    
+
+    node_compile = {
+         "id" : "node_compile", 
+         "task_type" : "class", 
+         "task_identifier" : "tasks_config.Compile",
+    }
+
     if slurm:
         node_subworkflow = {
             "id" : "node_subworkflow", 
@@ -301,10 +317,18 @@ def get_global_workflow(path_to_find, pattern, nfiles, chunk_size, config, slurm
             ],
         }
     
+    link_compile = {
+            "source" : f"node_split",
+            "target" : f"node_compile",
+            "data_mapping" : [
+                {"source_output" : "trigger_compile", "target_input" : "trigger_compile"},
+            ],
+    }
+    
     graph = {
         "graph" : {"id" : f"subgraph"},
-        "nodes" : [node_split, node_subworkflow],
-        "links" : [link_1, link_self],
+        "nodes" : [node_split, node_compile, node_subworkflow],
+        "links" : [link_1, link_self, link_compile],
         
     }
     # convert_graph(graph, "global_workflow_config.json")

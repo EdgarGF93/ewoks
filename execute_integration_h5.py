@@ -64,8 +64,8 @@ if __name__ == "__main__":
     SCAN_NUMBER = "1.1"
     DETECTOR_NAME = "eiger"
 
-    NFILES = 10
-    CHUNK_SIZE = 10
+    NFILES = 1
+    CHUNK_SIZE = 1
     CONFIG = "eiger9m_config.json"
     SLURM = False
     BENCHMARK = False
