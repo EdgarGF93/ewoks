@@ -156,11 +156,11 @@ class SplitList(
         self.outputs.chunk_range = chunk_range
         self.outputs.index = index + 1
 
-class Compile(
-    Task,
-    input_names=["trigger_compile"],
-):
-    print("hola")
+# class Compile(
+#     Task,
+#     input_names=["trigger_compile"],
+# ):
+#     print("hola")
 
 class ExecuteSubWorkflow(
     Task,

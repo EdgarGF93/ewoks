@@ -59,11 +59,11 @@ if __name__ == "__main__":
 
     PATH_DATA_INHOUSE = "/data/bm28/inhouse/Edgar/data_ewoks/P1M"
     PATTERN = "*.edf"
-    NFILES = 10
-    CHUNK_SIZE = 10
+    NFILES = 100
+    CHUNK_SIZE = 50
     CONFIG = "p1m_config.json"
     #CONFIG = "ewoks_config_cython_unix.json"
-    SLURM = True
+    SLURM = False
     BENCHMARK = False
 
     if BENCHMARK:
