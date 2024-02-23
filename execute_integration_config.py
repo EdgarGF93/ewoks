@@ -36,7 +36,7 @@ def benchmark_execution(
         y.append(ft)
 
         # remove files
-        for file_dat in Path(path_to_find).glob("eiger_*.dat"):
+        for file_dat in Path(path_to_find).glob("p1m_*.dat"):
             file_dat.unlink()    
 
     plt.plot(chunks, np.array(y), marker='o', ls='--')
@@ -57,14 +57,14 @@ if __name__ == "__main__":
     # PATH_UNIX = "/home/esrf/edgar1993a/work/ewoks/edf_data"
     # PATH_LOCAL = "/users/edgar1993a/work/ewoks_parallel/edf_data"    
 
-    PATH_DATA_INHOUSE = "/data/bm28/inhouse/Edgar/data_ewoks/EIGER"
+    PATH_DATA_INHOUSE = "/data/bm28/inhouse/Edgar/data_ewoks/P1M"
     PATTERN = "*.edf"
-    NFILES = 1000
-    CHUNK_SIZE = 100
-    CONFIG = "eiger_config_cython.json"
+    NFILES = 10
+    CHUNK_SIZE = 10
+    CONFIG = "p1m_config.json"
     #CONFIG = "ewoks_config_cython_unix.json"
     SLURM = True
-    BENCHMARK = True
+    BENCHMARK = False
 
     if BENCHMARK:
         benchmark_execution(

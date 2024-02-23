@@ -114,6 +114,8 @@ class OpenIntegrateSave(Task, input_names=["path_to_find", "chunk_range", "patte
                 radial_range=radial_range,
                 azimuth_range=azimuth_range,
             )
+            from pyFAI.method_registry import IntegrationMethod
+            print(IntegrationMethod.select_method(dim=1, split="bbox", algo="csr", impl="opencl"))
                
 class SplitList(
     Task,
@@ -269,11 +271,11 @@ def get_global_workflow(path_to_find, pattern, nfiles, chunk_size, config, slurm
             ]
     }
 
-    node_compile = {
-         "id" : "node_compile", 
-         "task_type" : "class", 
-         "task_identifier" : "tasks_config.Compile",
-    }
+    # node_compile = {
+    #      "id" : "node_compile", 
+    #      "task_type" : "class", 
+    #      "task_identifier" : "tasks_config.Compile",
+    # }
 
     if slurm:
         node_subworkflow = {
@@ -317,18 +319,26 @@ def get_global_workflow(path_to_find, pattern, nfiles, chunk_size, config, slurm
             ],
         }
     
-    link_compile = {
-            "source" : f"node_split",
-            "target" : f"node_compile",
-            "data_mapping" : [
-                {"source_output" : "trigger_compile", "target_input" : "trigger_compile"},
-            ],
-    }
+    # link_compile = {
+    #         "source" : f"node_split",
+    #         "target" : f"node_compile",
+    #         "data_mapping" : [
+    #             {"source_output" : "trigger_compile", "target_input" : "trigger_compile"},
+    #         ],
+    # }
     
     graph = {
         "graph" : {"id" : f"subgraph"},
-        "nodes" : [node_split, node_compile, node_subworkflow],
-        "links" : [link_1, link_self, link_compile],
+        "nodes" : [
+            node_split, 
+            # node_compile, 
+            node_subworkflow,
+            ],
+        "links" : [
+            link_1, 
+            link_self, 
+            # link_compile,
+            ],
         
     }
     # convert_graph(graph, "global_workflow_config.json")
