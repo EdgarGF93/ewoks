@@ -114,9 +114,9 @@ class OpenIntegrateSave(Task, input_names=["path_to_find", "chunk_range", "patte
                 radial_range=radial_range,
                 azimuth_range=azimuth_range,
             )
-            from pyFAI.method_registry import IntegrationMethod
-            with open("kkk.txt", "w") as f:
-                f.write(str(IntegrationMethod.select_method(dim=1, split="bbox", algo="csr", impl="opencl")))
+            # from pyFAI.method_registry import IntegrationMethod
+            # with open("kkk.txt", "w") as f:
+            #     f.write(str(IntegrationMethod.select_method(dim=1, split="bbox", algo="csr", impl="opencl")))
 class SplitList(
     Task,
     input_names=[
@@ -161,33 +161,6 @@ class Compile(
     input_names=["trigger_compile"],
 ):
     print("hola")
-
-
-# class ExecuteGlobalWorkflow(
-#     Task,
-#     input_names=[
-#         "path_to_find", 
-#         "pattern", 
-#         "nfiles", 
-#         "chunk_size", 
-#         "config", 
-#         "slurm"],
-# ):
-#     def run(self):
-#         # Execute the global workflow using PPF engine
-#         global_graph = get_global_workflow(
-#             path_to_find=self.inputs.path_to_find,
-#             pattern=self.inputs.pattern,
-#             nfiles=self.inputs.nfiles,
-#             chunk_size=self.inputs.chunk_size,
-#             config=self.inputs.config,
-#             slurm=self.inputs.slurm,
-#         )
-
-#         execute_graph(
-#             graph=global_graph,
-#             engine="ppf",
-#         )
 
 class ExecuteSubWorkflow(
     Task,
@@ -343,25 +316,6 @@ def get_global_workflow(path_to_find, pattern, nfiles, chunk_size, config, slurm
     }
     # convert_graph(graph, "global_workflow_config.json")
     return graph
-
-# def execute_god_workflow(path_to_find, pattern, nfiles, chunk_size, config, slurm=True) -> None:
-
-#     node_god = {
-#         "id" : "node_god", 
-#         "task_type" : "class", 
-#         "task_identifier" : "tasks_config.ExecuteGlobalWorkflow",
-#         "default_inputs" : [{"name" : "path_to_find", "value" : path_to_find},
-#                             {"name" : "pattern", "value" : pattern},
-#                             {"name" : "nfiles", "value" : nfiles},
-#                             {"name" : "chunk_size", "value" : chunk_size},                            
-#                             {"name" : "config", "value" : config},
-#                             {"name" : "slurm", "value" : slurm},
-#                             ]
-#     }
-#     graph_god = {"graph" : {"id" : "graph_god"}, "nodes" : [node_god], "links" : []}
-#     # convert_graph(graph_god, "god_workflow.json")
-
-#     execute_graph(graph=graph_god, engine="dask")
 
 def execute_global_workflow(path_to_find, pattern, nfiles, chunk_size, config, slurm=True) -> None:
 
