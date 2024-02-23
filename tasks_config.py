@@ -116,7 +116,7 @@ class OpenIntegrateSave(Task, input_names=["path_to_find", "chunk_range", "patte
             )
             from pyFAI.method_registry import IntegrationMethod
             with open("kkk.txt", "w") as f:
-                f.write(str(IntegrationMethod.select_method(dim=1, split="bbox", algo="csr", impl="opencl"))))
+                f.write(str(IntegrationMethod.select_method(dim=1, split="bbox", algo="csr", impl="opencl")))
 class SplitList(
     Task,
     input_names=[
